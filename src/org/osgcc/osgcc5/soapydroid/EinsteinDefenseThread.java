@@ -1,18 +1,55 @@
 package org.osgcc.osgcc5.soapydroid;
 
+import java.util.List;
+
+import org.osgcc.osgcc5.soapydroid.things.CollidableThing;
+
 import android.graphics.Canvas;
 
 public class EinsteinDefenseThread extends Thread {
 
 	/**
-	 * reference to main panel
+	 * Reference to main panel.
 	 */
 	EinsteinDefensePanel mainView;
 
-	boolean running;
+	/**
+	 * Indicates whether the thread should currently be running.
+	 */
+	private boolean running;
 
-	public EinsteinDefenseThread(EinsteinDefensePanel mainView) {
+	
+	
+	
+
+	/**
+	 * List of active invaders.
+	 * NOTE: this will be used by multiple threads. Make sure to synchronize!
+	 */
+	private List<CollidableThing> invaders;
+	
+	/**
+	 * List of active projectiles.
+	 * NOTE: this will be used by multiple threads. Make sure to synchronize!
+	 */
+	private List<CollidableThing> projectilesActive;
+	
+	/**
+	 * List of inactive projectiles (waiting on the ground to be flung).
+	 * NOTE: this will be used by multiple threads. Make sure to synchronize!
+	 */
+	private List<CollidableThing> projectilesInactive;
+	
+	public EinsteinDefenseThread(EinsteinDefensePanel mainView, 
+			List<CollidableThing> invaders, 
+			List<CollidableThing> projectilesActive,
+			List<CollidableThing> projectilesInactive) {
 		this.mainView = mainView;
+		
+		this.invaders = invaders;
+		this.projectilesActive = projectilesActive;
+		this.projectilesInactive = projectilesInactive;
+		
 	}
 
 	public void setRunning(boolean running) {
@@ -32,7 +69,21 @@ public class EinsteinDefenseThread extends Thread {
 				// don't let anything else interfere while we do canvas-y stuff
 				canvas = mainView.getHolder().lockCanvas();
 				synchronized (mainView.getHolder()) {
-					// update physics
+					// detect and handle collisions
+					// this is currently very inefficient, fix later
+					for (CollidableThing invader : invaders) {
+						for (CollidableThing projectile : projectilesActive) {
+							
+						}
+					}
+					
+					// update positions
+					for (CollidableThing invader : invaders) {
+						
+					}
+					for (CollidableThing projectile : projectilesActive) {
+						
+					}
 
 					// update images
 					mainView.onDraw(canvas);
