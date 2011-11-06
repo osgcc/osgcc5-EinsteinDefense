@@ -7,6 +7,7 @@ public class CollidableTree extends CollidableThing {
 
 	public CollidableTree() {
 		super();
+		setType("tree");
 		setBitmap(EinsteinDefenseActivity.getImageCache().get(R.drawable.tree));
 		isEnemy = false;
 	}

@@ -7,6 +7,7 @@ public class CollidableCow extends CollidableThing {
 	
 	public CollidableCow() {
 		super();
+		setType("cow");
 		setBitmap(EinsteinDefenseActivity.getImageCache().get(R.drawable.cow));
 		isEnemy = false;
 	}

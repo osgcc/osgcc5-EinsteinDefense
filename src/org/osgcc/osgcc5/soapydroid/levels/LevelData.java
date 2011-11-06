@@ -48,7 +48,11 @@ public class LevelData extends LevelInitializer{
 				thingsArray[k] = new CollidableRock();
 			else if(thingType.equals("Cow"))
 				thingsArray[k] = new CollidableCow();
-			else
+			else if(thingType.equals("Iceberg"))
+				thingsArray[k] = new CollidableIceberg();
+			else if(thingType.equals("Einstein"))
+				thingsArray[k] = new CollidableEinstein();
+			else if(thingType.equals("SuperEinstein"))
 				thingsArray[k] = new CollidableEinstein();
 			
 			thingsArray[k].setX(scanner.nextInt());

@@ -36,7 +36,9 @@ public abstract class CollidableThing {
 	// point value
 	protected int points;
 	
-
+	// type name
+	protected String type;
+	
 	public CollidableThing() {
 		x = 0;
 		y = 0;
@@ -51,6 +53,15 @@ public abstract class CollidableThing {
 		width = 1;
 		bitmap = null;
 		isEnemy = false;
+		type = "";
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 

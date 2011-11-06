@@ -45,7 +45,7 @@ public class RotationDetector {
 		@Override
 		public void onSensorChanged(SensorEvent event) {
 			if (event.sensor.getType() == Sensor.TYPE_GRAVITY) {
-				Log.v(DEBUG_TAG, "orientation changed to "+event.values[0]+","+event.values[1]);
+				//Log.v(DEBUG_TAG, "orientation changed to "+event.values[0]+","+event.values[1]);
 				xOrientation = event.values[0];
 				yOrientation = event.values[1];
 			}
