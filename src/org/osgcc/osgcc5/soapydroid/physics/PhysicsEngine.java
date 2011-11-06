@@ -47,6 +47,16 @@ public class PhysicsEngine implements CollisionHandler{
 	{
 		boolean collided = false;
 		//checks to see if they collided by top or bottom of squares
+		float y1 = thing1.getY();
+		float x1 = thing1.getX();
+		float y2 = thing2.getY();
+		float x2 = thing2.getX();
+		float height1 = thing1.getHeight();
+		float height2 = thing2.getHeight();
+		float width1 = thing1.getWidth();
+		float width2 = thing2.getWidth();
+		
+		
 		if( (thing1.getY()+thing1.getHeight() >= thing2.getY()) || (thing2.getY()+thing2.getHeight() >= thing1.getY()))
 		{
 			if( ((thing2.getX() >= thing1.getDx()) && ((thing2.getX() + thing2.getWidth() - thing1.getX()) <= (thing1.getWidth() + thing2.getWidth()))) ||
