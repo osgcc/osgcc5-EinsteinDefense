@@ -1,11 +1,13 @@
 package org.osgcc.osgcc5.soapydroid;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.osgcc.osgcc5.soapydroid.gestures.EinsteinGestureListener;
+import org.osgcc.osgcc5.soapydroid.levels.LevelData;
 import org.osgcc.osgcc5.soapydroid.levels.LevelInitializer;
 import org.osgcc.osgcc5.soapydroid.levels.LevelInitializerSample;
 import org.osgcc.osgcc5.soapydroid.physics.PhysicsEngine;
@@ -15,7 +17,9 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.media.SoundPool;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -94,9 +98,15 @@ public class EinsteinDefensePanel extends SurfaceView implements SurfaceHolder.C
 		physicsEngine = new PhysicsEngine();
 		
 		// for test: no ceiling
-		flingCeiling = 0;
+		//flingCeiling = 0;
+		flingCeiling = 450;
 		
-		levelInitializer = new LevelInitializerSample(invaders, projectilesActive, projectilesInactive);
+		//levelInitializer = new LevelInitializerSample(invaders, projectilesActive, projectilesInactive);
+		try {
+			levelInitializer = new LevelData(invaders, projectilesActive, projectilesInactive);
+		} catch (FileNotFoundException e) {
+			System.exit(1);
+		}
 		levelInitializer.initializeLists(0);
 		
 		gestureListener = new GestureDetector(context, 
@@ -116,6 +126,15 @@ public class EinsteinDefensePanel extends SurfaceView implements SurfaceHolder.C
 		
 		// draw background
 		canvas.drawBitmap(imageCache.get(R.drawable.background), 0, 0, null);
+		
+		// draw score, etc
+		//canvas.drawText("score:", 900, 50, null);
+		
+		// draw line beyond which there's no control
+		Paint linePainter = new Paint();
+		linePainter.setColor(Color.BLACK);
+		linePainter.setAlpha(50);
+		canvas.drawLine(0, flingCeiling, 1280, flingCeiling, linePainter);
 		
 		// draw collidable objects
 		// NOTE: must figure out how to draw with rotation!

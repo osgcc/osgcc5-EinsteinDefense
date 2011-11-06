@@ -90,20 +90,23 @@ GestureDetector.OnDoubleTapListener {
 	
 	public boolean onScroll(MotionEvent e1, MotionEvent e2,
 			float distanceX, float distanceY) {
-		// TODO Auto-generated method stub
 		
 		if(e2.getY() < maxY)
 		{
 			deltaTime = System.currentTimeMillis() - deltaTime ;
 			
-			float velocityX = ((e2.getX() - pastX) / deltaTime); 
-			float velocityY = ((e2.getY() - pastY) / deltaTime);
+			//float velocityX = ((e2.getX() - pastX) / deltaTime); 
+			//float velocityY = ((e2.getY() - pastY) / deltaTime);
+			float velocityX = (e2.getX() - pastX); 
+			float velocityY = (e2.getY() - pastY);
 			
 			synchronized(activeThings)
 			{
-			movingItem.setDx(velocityX) ;
-			movingItem.setDy(velocityY) ;
-			activeThings.add(movingItem) ;
+				if (movingItem != null) {
+					movingItem.setDx(velocityX) ;
+					movingItem.setDy(velocityY) ;
+					activeThings.add(movingItem) ;
+				}
 			}
 			synchronized(activeThings)
 			{
