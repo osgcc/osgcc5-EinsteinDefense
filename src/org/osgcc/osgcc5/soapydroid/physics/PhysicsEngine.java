@@ -44,8 +44,8 @@ public class PhysicsEngine implements CollisionHandler{
 		//checks to see if they collided by top or bottom of squares
 		if( (thing1.getY()+thing1.getHeight() >= thing2.getY()) || (thing2.getY()+thing2.getHeight() >= thing1.getY()))
 		{
-			if( ((thing2.getX() + thing2.getWidth() - thing1.getX()) <= (thing1.getWidth() + thing2.getWidth())) ||
-					( (thing1.getX() + thing1.getWidth() - thing2.getX()) <= (thing1.getWidth() + thing2.getWidth()) ))
+			if( ((thing2.getX() >= thing1.getDx()) && ((thing2.getX() + thing2.getWidth() - thing1.getX()) <= (thing1.getWidth() + thing2.getWidth()))) ||
+					((thing1.getX() >= thing2.getX()) && ( (thing1.getX() + thing1.getWidth() - thing2.getX()) <= (thing1.getWidth() + thing2.getWidth()) )))
 				collided = true;
 		}
 		//checks to see if they collide on either sides
@@ -63,13 +63,13 @@ public class PhysicsEngine implements CollisionHandler{
 		{
 			//First gets new Dy for each object
 			float totalMomentum = thing1.getDy()*thing1.getMass() + thing2.getDy()*thing2.getMass();
-			thing1.setDy(findNewVel(thing1.getDy(), thing1.getMass(), thing2.getDy(), thing2.getMass())/50);
-			thing2.setDy((totalMomentum - thing1.getMass()*thing1.getDy())/thing2.getMass()/50);
+			thing1.setDy(findNewVel(thing1.getDy(), thing1.getMass(), thing2.getDy(), thing2.getMass()));
+			thing2.setDy((totalMomentum - thing1.getMass()*thing1.getDy())/thing2.getMass());
 		
 			//Gets new Dx for each object
 			totalMomentum = thing1.getDx()*thing1.getMass() + thing2.getDx()*thing2.getMass();
-			thing1.setDx(findNewVel(thing1.getDx(), thing1.getMass(), thing2.getDx(), thing2.getMass())/50);
-			thing2.setDx((totalMomentum - thing1.getMass()*thing1.getDx())/thing2.getMass()/50);
+			thing1.setDx(findNewVel(thing1.getDx(), thing1.getMass(), thing2.getDx(), thing2.getMass()));
+			thing2.setDx((totalMomentum - thing1.getMass()*thing1.getDx())/thing2.getMass());
 			
 			//sets the new orientations 
 		}
@@ -97,9 +97,9 @@ public class PhysicsEngine implements CollisionHandler{
 				collisionWall(thing);
 			}
 			//keeps objects from going past the right side of the screen and bounces it to the left
-			if(thing.getX() + thing.getWidth() >= 1980)//1980 should be width of screen
+			if(thing.getX() + thing.getWidth() >= 1280)//1280 should be width of screen
 			{
-				thing.setX(1980 - thing.getWidth());
+				thing.setX(1280 - thing.getWidth());
 				collisionWall(thing);
 			}
 	}
