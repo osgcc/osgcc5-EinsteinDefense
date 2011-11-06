@@ -41,14 +41,15 @@ public class PhysicsEngine implements CollisionHandler{
 	private boolean haveCollided(CollidableThing thing1, CollidableThing thing2)
 	{
 		boolean collided = false;
-		if( (thing1.getY()+thing1.getHeight() == thing2.getY()) || (thing2.getY()+thing2.getHeight() == thing1.getY()))
+		//checks to see if they collided by top or bottom of squares
+		if( (thing1.getY()+thing1.getHeight() >= thing2.getY()) || (thing2.getY()+thing2.getHeight() >= thing1.getY()))
 		{
-			collided = true;
+			if( ((thing2.getX() + thing2.getWidth() - thing1.getX()) <= (thing1.getWidth() + thing2.getWidth())) ||
+					( (thing1.getX() + thing1.getWidth() - thing2.getX()) <= (thing1.getWidth() + thing2.getWidth()) ))
+				collided = true;
 		}
-		else if ( (thing1.getX()+thing1.getHeight() == thing2.getX()) || (thing2.getX()+thing2.getHeight() == thing1.getX()))
-		{
-			collided = true;
-		}
+		//checks to see if they collide on either sides
+		
 		return collided;
 	}
 	
