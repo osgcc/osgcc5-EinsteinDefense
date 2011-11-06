@@ -25,10 +25,7 @@ public class PhysicsEngine implements CollisionHandler{
 		return numerator/denominator;
 	}
 	
-	
-	
-	
-	
+
 	/*
 	 * Changes the velocities of two collidable objects whenever a collision occurs 
 	 *  
@@ -37,42 +34,12 @@ public class PhysicsEngine implements CollisionHandler{
 	public void collision(CollidableThing thing1, CollidableThing thing2,
 			int onTop, int onLeft) {
 
-	/*
-	 * These if statemnets may not be needed if the dx or dy' passed in are 0.
-	 * 
-		if(onLeft == 0)
-		{
-			This calculates just Dy since head on collision would not involve dx's
-			the total momentum is found so that the velocity of the second can be found.
-			 einstein
-			  |
-			  |
-			  V
-			  ^
-			  |
-			  |
-			  player's object
-			 
-			
-		}
-		else if(onTop == 0)
-		{
-			
-			although einstein is not moving sideways, it's dy would not be affected since 
-			  we are assuming that thing1's dy is 0
-			  
-			  einstein
-			  |
-			  | <----- player's object
-			  V
-			 
-		}
-		*/
-		
+		//First gets new Dy for each object
 		int totalMomentum = thing1.getDy()*thing1.getMass() + thing2.getDy()*thing2.getMass();
 		thing1.setDy(findNewDy(thing1.getDy(), thing1.getMass(), thing2.getDy(), thing2.getMass()));
 		thing2.setDy((totalMomentum - thing1.getMass()*thing1.getDy())/thing2.getMass());
 		
+		//Gets new Dx for each object
 		totalMomentum = thing1.getDx()*thing1.getMass() + thing2.getDx()*thing2.getMass();
 		thing1.setDx(findNewDx(thing1.getDx(), thing1.getMass(), thing2.getDx(), thing2.getMass()));
 		thing2.setDx((totalMomentum - thing1.getMass()*thing1.getDx())/thing2.getMass());
