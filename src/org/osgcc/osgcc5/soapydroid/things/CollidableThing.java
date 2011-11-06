@@ -3,90 +3,106 @@ package org.osgcc.osgcc5.soapydroid.things;
 import android.graphics.Bitmap;
 
 public abstract class CollidableThing {
-	
+
 	// position
-	private int x;
-	private int y;
-	
+	protected float x;
+	protected float y;
+
 	// velocity
-	private int dx;
-	private int dy;
-	
+	protected float dx;
+	protected float dy;
+
 	// acceleration
-	private int accx;
-	private int accy;
-	
+	protected float accx;
+	protected float accy;
+
 	// mass
-	private int mass;
-	
+	protected float mass;
+
 	// size
-	private int height;
-	private int width;
-	
+	protected float height;
+	protected float width;
+
 	// bitmap
-	private Bitmap bitmap;
-	
-	
-	public int getHeight() {
+	protected Bitmap bitmap;
+
+	public float getHeight() {
 		return height;
 	}
-	public void setHeight(int height) {
+
+	public void setHeight(float height) {
 		this.height = height;
 	}
-	public int getWidth() {
+
+	public float getWidth() {
 		return width;
 	}
-	public void setWidth(int width) {
+
+	public void setWidth(float width) {
 		this.width = width;
 	}
+
 	public Bitmap getBitmap() {
 		return bitmap;
 	}
+
 	public void setBitmap(Bitmap bitmap) {
 		this.bitmap = bitmap;
 	}
-	public int getX() {
+
+	public float getX() {
 		return x;
 	}
-	public void setX(int x) {
+
+	public void setX(float x) {
 		this.x = x;
 	}
-	public int getY() {
+
+	public float getY() {
 		return y;
 	}
-	public void setY(int y) {
+
+	public void setY(float y) {
 		this.y = y;
 	}
-	public int getDx() {
+
+	public float getDx() {
 		return dx;
 	}
-	public void setDx(int dx) {
+
+	public void setDx(float dx) {
 		this.dx = dx;
 	}
-	public int getDy() {
+
+	public float getDy() {
 		return dy;
 	}
-	public void setDy(int dy) {
+
+	public void setDy(float dy) {
 		this.dy = dy;
 	}
-	public int getAccx() {
+
+	public float getAccx() {
 		return accx;
 	}
-	public void setAccx(int accx) {
+
+	public void setAccx(float accx) {
 		this.accx = accx;
 	}
-	public int getAccy() {
+
+	public float getAccy() {
 		return accy;
 	}
-	public void setAccy(int accy) {
+
+	public void setAccy(float accy) {
 		this.accy = accy;
 	}
-	public int getMass()
-	{
+
+	public float getMass() {
 		return mass;
 	}
-	public void setMass(int mass)
-	{
+
+	public void setMass(float mass) {
 		this.mass = mass;
 	}
 }
