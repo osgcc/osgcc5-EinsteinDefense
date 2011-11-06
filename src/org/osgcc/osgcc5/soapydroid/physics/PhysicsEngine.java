@@ -15,13 +15,27 @@ public class PhysicsEngine implements CollisionHandler{
 	private float findNewVel(float vel_1, float mass1, float vel_2, float mass2)
 	{
 		float numerator = vel_1*(mass2 + mass1)+2*vel_2*mass2;
-		float denominator = vel_1 + mass2;
+		float denominator = mass1 + mass2;
 		return numerator/denominator;
 	}
 	
-	private float findNewOrientation(CollidableThing thing)
+	private float findNewOrientation(CollidableThing thing1, CollidableThing thing2)
 	{
-		return 0;
+		float orientation = 0;
+		//will run through this, so long as neither of the objects is more than twice the weight of the other
+		if (thing1.getMass() * 2 > thing2.getMass() && thing2.getMass() * 2 > thing1.getMass()) {
+			if ((thing1.getY() + thing1.getHeight()) / 2 < thing2.getY()) {
+				orientation = 1;
+			} else if ((thing1.getY() + thing1.getHeight()) / 2 > thing2.getX()
+					+ thing2.getHeight()) {
+				orientation = -1;
+			} else if ((thing1.getX() + thing1.getWidth()) / 2 < thing2.getX()) {
+				orientation = -1;
+			} else if ((thing1.getX() + thing1.getWidth()) / 2 > thing2.getX()){
+				return 1;
+			}
+		}
+		return orientation;
 	}
 	
 	private boolean haveCollided(CollidableThing thing1, CollidableThing thing2)
@@ -40,7 +54,7 @@ public class PhysicsEngine implements CollisionHandler{
 	
 	/*
 	 * Changes the velocities of two collidable objects whenever a collision occurs 
-	 *  
+	 *
 	 */
 	
 	public void collision(CollidableThing thing1, CollidableThing thing2) {
@@ -55,6 +69,8 @@ public class PhysicsEngine implements CollisionHandler{
 			totalMomentum = thing1.getDx()*thing1.getMass() + thing2.getDx()*thing2.getMass();
 			thing1.setDx(findNewVel(thing1.getDx(), thing1.getMass(), thing2.getDx(), thing2.getMass()));
 			thing2.setDx((totalMomentum - thing1.getMass()*thing1.getDx())/thing2.getMass());
+			
+			//sets the new orientations 
 		}
 		
 		
@@ -70,8 +86,21 @@ public class PhysicsEngine implements CollisionHandler{
 
 	public void updatePosition(CollidableThing thing)
 	{
-		thing.setX(thing.getX()+thing.getDx());
-		thing.setY(thing.getX()+thing.getDy());
+			thing.setX(thing.getX()+thing.getDx());
+			thing.setY(thing.getX()+thing.getDy());
+			
+			//keeps and object from going past the left side of the screen and bounces it the opposite direction
+			if(thing.getX() <= 0)
+			{
+				thing.setX(0);
+				collisionWall(thing);
+			}
+			//keeps objects from going past the right side of the screen and bounces it to the left
+			if(thing.getX() + thing.getWidth() >= 1980)//1980 should be width of screen
+			{
+				thing.setX(1980 - thing.getWidth());
+				collisionWall(thing);
+			}
 	}
 	
 	
