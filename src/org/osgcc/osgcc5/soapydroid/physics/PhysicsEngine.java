@@ -19,27 +19,48 @@ public class PhysicsEngine implements CollisionHandler{
 		return numerator/denominator;
 	}
 	
+	private float findNewOrientation(CollidableThing thing)
+	{
+		return 0;
+	}
+	
+	private boolean haveCollided(CollidableThing thing1, CollidableThing thing2)
+	{
+		boolean collided = false;
+		if( (thing1.getY()+thing1.getHeight() == thing2.getY()) || (thing2.getY()+thing2.getHeight() == thing1.getY()))
+		{
+			collided = true;
+		}
+		else if ( (thing1.getX()+thing1.getHeight() == thing2.getX()) || (thing2.getX()+thing2.getHeight() == thing1.getX()))
+		{
+			collided = true;
+		}
+		return collided;
+	}
+	
 	/*
 	 * Changes the velocities of two collidable objects whenever a collision occurs 
 	 *  
 	 */
 	
 	public void collision(CollidableThing thing1, CollidableThing thing2) {
-
-		//First gets new Dy for each object
-		float totalMomentum = thing1.getDy()*thing1.getMass() + thing2.getDy()*thing2.getMass();
-		thing1.setDy(findNewVel(thing1.getDy(), thing1.getMass(), thing2.getDy(), thing2.getMass()));
-		thing2.setDy((totalMomentum - thing1.getMass()*thing1.getDy())/thing2.getMass());
+		if(haveCollided(thing1, thing2))
+		{
+			//First gets new Dy for each object
+			float totalMomentum = thing1.getDy()*thing1.getMass() + thing2.getDy()*thing2.getMass();
+			thing1.setDy(findNewVel(thing1.getDy(), thing1.getMass(), thing2.getDy(), thing2.getMass()));
+			thing2.setDy((totalMomentum - thing1.getMass()*thing1.getDy())/thing2.getMass());
 		
-		//Gets new Dx for each object
-		totalMomentum = thing1.getDx()*thing1.getMass() + thing2.getDx()*thing2.getMass();
-		thing1.setDx(findNewVel(thing1.getDx(), thing1.getMass(), thing2.getDx(), thing2.getMass()));
-		thing2.setDx((totalMomentum - thing1.getMass()*thing1.getDx())/thing2.getMass());
+			//Gets new Dx for each object
+			totalMomentum = thing1.getDx()*thing1.getMass() + thing2.getDx()*thing2.getMass();
+			thing1.setDx(findNewVel(thing1.getDx(), thing1.getMass(), thing2.getDx(), thing2.getMass()));
+			thing2.setDx((totalMomentum - thing1.getMass()*thing1.getDx())/thing2.getMass());
+		}
 		
 		
 	}
 
-	public void coliisonWall(CollidableThing thing) {
+	public void collisionWall(CollidableThing thing) {
 		//may need to add that only "non-hit" enemies and player's objects bounce, already 
 		//hit enemies should go off of screen
 		
@@ -52,6 +73,8 @@ public class PhysicsEngine implements CollisionHandler{
 		thing.setX(thing.getX()+thing.getDx());
 		thing.setY(thing.getX()+thing.getDy());
 	}
+	
+	
 
 	
 
