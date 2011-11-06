@@ -180,7 +180,7 @@ public class EinsteinDefensePanel extends SurfaceView implements SurfaceHolder.C
 		//canvas.drawBitmap(imageCache.get(R.drawable.cow), 50, 500, null);
 		
 		// draw background
-		canvas.drawBitmap(imageCache.get(R.drawable.background), 0, 0, null);
+		canvas.drawBitmap(imageCache.get(currentBackgroundR), 0, 0, null);
 		
 		// draw score, etc
 		Paint textPainter = new Paint();
