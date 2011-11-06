@@ -1,5 +1,7 @@
 package org.osgcc.osgcc5.soapydroid.things;
 
+import android.graphics.Bitmap;
+
 public abstract class CollidableThing {
 	
 	// position
@@ -14,14 +16,35 @@ public abstract class CollidableThing {
 	private int accx;
 	private int accy;
 	
-	//mass
+	// mass
 	private int mass;
 	
+	// size
+	private int height;
+	private int width;
+	
+	// bitmap
+	private Bitmap bitmap;
 	
 	
-	
-	
-	
+	public int getHeight() {
+		return height;
+	}
+	public void setHeight(int height) {
+		this.height = height;
+	}
+	public int getWidth() {
+		return width;
+	}
+	public void setWidth(int width) {
+		this.width = width;
+	}
+	public Bitmap getBitmap() {
+		return bitmap;
+	}
+	public void setBitmap(Bitmap bitmap) {
+		this.bitmap = bitmap;
+	}
 	public int getX() {
 		return x;
 	}
