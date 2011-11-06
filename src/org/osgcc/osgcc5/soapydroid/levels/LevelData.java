@@ -9,11 +9,14 @@ import java.util.Scanner;
 import org.osgcc.osgcc5.soapydroid.things.CollidableCow;
 import org.osgcc.osgcc5.soapydroid.things.CollidableEinstein;
 import org.osgcc.osgcc5.soapydroid.things.CollidableIceberg;
+import org.osgcc.osgcc5.soapydroid.things.CollidableRock;
 import org.osgcc.osgcc5.soapydroid.things.CollidableThing;
 import org.osgcc.osgcc5.soapydroid.things.CollidableTree;
 
 
 import android.content.res.Resources;
+
+import org.osgcc.osgcc5.soapydroid.EinsteinDefenseActivity;
 import org.osgcc.osgcc5.soapydroid.R;
 
 public class LevelData extends LevelInitializer{
@@ -24,7 +27,7 @@ public class LevelData extends LevelInitializer{
 			List<CollidableThing> projectilesInactive) throws FileNotFoundException {
 		super(invaders, projectilesActive, projectilesInactive);
 		// TODO Auto-generated constructor stub
-		InputStream reader = getResources.openRawResource(R.raw.leveldata);
+		InputStream reader = EinsteinDefenseActivity.getTextCache().get(R.raw.leveldata);
 		scanner = new Scanner(reader);
 	}
 
@@ -40,7 +43,7 @@ public class LevelData extends LevelInitializer{
 			if(thingType.equals("Tree"))
 				thingsArray[k] = new CollidableTree();
 			else if(thingType.equals("Rock"))
-				thingsArray[k] = new CollidableTree();
+				thingsArray[k] = new CollidableRock();
 			else if(thingType.equals("Cow"))
 				thingsArray[k] = new CollidableCow();
 			else
