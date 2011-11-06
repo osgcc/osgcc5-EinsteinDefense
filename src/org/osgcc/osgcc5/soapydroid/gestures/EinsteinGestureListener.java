@@ -20,6 +20,10 @@ GestureDetector.OnDoubleTapListener {
 	List<CollidableThing> activeThings ;
 	CollidableThing       movingItem   ;
 	float                 maxY         ;
+	long                  deltaTime    ;
+	float                 pastX        ;
+	float                 pastY        ;
+	
 	public static final String DEBUG_TAG = "Gesture Listener" ;
 	public EinsteinGestureListener(EinsteinDefensePanel mainView, List<CollidableThing> collidables, List<CollidableThing> activeList, float maxY) {
 		this.mainView    = mainView    ;
@@ -61,12 +65,18 @@ GestureDetector.OnDoubleTapListener {
 		Log.v(DEBUG_TAG, "onFling")  ;
 		synchronized(activeThings)
 		{
+		if(movingItem != null)
+		{
+		movingItem.setDx(velocityX) ;
+		movingItem.setDy(velocityY) ;
 		activeThings.add(movingItem) ;
+		}
 		}
 		synchronized(activeThings)
 		{
 			mainView.setHeldOutCollidable(null) ;
 		}
+		
 		movingItem      = null       ;
 		return true;
 	}
@@ -84,8 +94,13 @@ GestureDetector.OnDoubleTapListener {
 		
 		if(e2.getY() < maxY)
 		{
+			deltaTime = System.currentTimeMillis() - deltaTime;
+			float velocityY = ((e2.getY() - pastY) / deltaTime);
+			float velocityX = ((e2.getX() - pastX) / deltaTime);
 			synchronized(activeThings)
 			{
+			movingItem.setDx(velocityX) ;
+			movingItem.setDy(velocityY) ;
 			activeThings.add(movingItem) ;
 			}
 			synchronized(activeThings)
@@ -101,6 +116,9 @@ GestureDetector.OnDoubleTapListener {
 			movingItem.setY(e2.getY() - (movingItem.getHeight()/2));
 		}
 		Log.v(DEBUG_TAG, "OnScroll: Y: " + e2.getY() + " maxY: " + maxY) ;
+		pastX = e2.getX();
+		pastY = e2.getY();
+		deltaTime = System.currentTimeMillis() ;
 		return true;
 	}
 
@@ -121,6 +139,9 @@ GestureDetector.OnDoubleTapListener {
 		// TODO Auto-generated method stub
 		float x = event.getX() ;
 		float y = event.getY() ;
+		pastX = x ;
+		pastY = y ;
+		
 		boolean isTouch = false ;
 		for(CollidableThing i: collidables)
 		{
@@ -131,12 +152,14 @@ GestureDetector.OnDoubleTapListener {
 			if(x >= xObj && x <= (xObj + width) && y >= maxY)
 				if(y >= yObj && y <= (yObj + height))
 						{
+								deltaTime = System.currentTimeMillis() ;
 							synchronized(collidables)
 							{
 							collidables.remove(i) ;
 							mainView.setHeldOutCollidable(i) ;
 							isTouch = true ;
 							}
+							
 							Log.v(DEBUG_TAG, "Is touching: " + isTouch) ;
 							return i ; 
 						}
