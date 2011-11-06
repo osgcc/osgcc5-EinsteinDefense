@@ -87,7 +87,7 @@ public class PhysicsEngine implements CollisionHandler{
 	public void updatePosition(CollidableThing thing)
 	{
 			thing.setX(thing.getX()+thing.getDx());
-			thing.setY(thing.getX()+thing.getDy());
+			thing.setY(thing.getY()+thing.getDy());
 			
 			//keeps and object from going past the left side of the screen and bounces it the opposite direction
 			if(thing.getX() <= 0)
