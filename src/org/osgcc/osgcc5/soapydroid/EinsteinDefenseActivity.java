@@ -13,6 +13,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,7 +38,8 @@ public class EinsteinDefenseActivity extends Activity {
 	/**
 	 * Cache for all sound files.
 	 */
-	private static SoundPool soundCache;
+	private static SoundPool soundPool = new SoundPool(4, AudioManager.STREAM_MUSIC, 100) ;
+	private static Map<Integer, Integer> soundCache = new HashMap<Integer, Integer>() ;
 	//private static SoundPool soundCache = new SoundPool(maxStreams, streamType, srcQuality);
 	
 	private static Map<Integer, InputStream> textCache = new HashMap<Integer, InputStream>();
@@ -86,13 +88,15 @@ public class EinsteinDefenseActivity extends Activity {
 		imageCache.put(R.drawable.background, BitmapFactory.decodeResource(getResources(), R.drawable.background));
 		imageCache.put(R.drawable.logo, BitmapFactory.decodeResource(getResources(), R.drawable.logo));
 		imageCache.put(R.drawable.einstein, BitmapFactory.decodeResource(getResources(), R.drawable.einstein));
+		
 	}
 	
 	private void loadSounds() {
-		
+		soundCache.put(1, soundPool.load(this, R.raw.explosion, 1)) ;
 		
 		
 	}
+	
 	
 	private void loadText() {
 		textCache.put(R.raw.leveldata, getResources().openRawResource(R.raw.leveldata));
@@ -102,8 +106,13 @@ public class EinsteinDefenseActivity extends Activity {
 		return imageCache;
 	}
 	
-	public static SoundPool getSoundCache() {
+	public static Map<Integer, Integer> getSoundCache() {
 		return soundCache;
+	}
+	
+	public static SoundPool getSoundPool()
+	{
+		return soundPool ;
 	}
 	
 	public static Map<Integer, InputStream> getTextCache() {
