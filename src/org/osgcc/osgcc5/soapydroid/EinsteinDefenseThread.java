@@ -184,7 +184,7 @@ public class EinsteinDefenseThread extends Thread {
 							float y = invader.getY();
 							float width = invader.getWidth();
 							float height = invader.getHeight();
-							if (y < -height*oobModifier ||
+							if (y < -1000 ||
 									x < -width*oobModifier ||
 									x > 1280 + width*oobModifier) {
 								scoreManager.incrementScore(invader.getPoints());

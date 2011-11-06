@@ -88,6 +88,7 @@ public class EinsteinDefenseActivity extends Activity {
 		imageCache.put(R.drawable.background, BitmapFactory.decodeResource(getResources(), R.drawable.background));
 		imageCache.put(R.drawable.logo, BitmapFactory.decodeResource(getResources(), R.drawable.logo));
 		imageCache.put(R.drawable.einstein, BitmapFactory.decodeResource(getResources(), R.drawable.einstein));
+		imageCache.put(R.drawable.help, BitmapFactory.decodeResource(getResources(), R.drawable.help));
 		
 	}
 	
