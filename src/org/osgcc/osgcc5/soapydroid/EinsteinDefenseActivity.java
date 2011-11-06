@@ -54,6 +54,8 @@ public class EinsteinDefenseActivity extends Activity {
 	 */
 	private static EinsteinDefenseActivity activity;
 	
+	private MediaPlayer mediaPlayer;
+	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -67,10 +69,20 @@ public class EinsteinDefenseActivity extends Activity {
 		loadSounds();
 		Log.d(DEBUG_TAG, "loading text...");
 		loadText();
+<<<<<<< HEAD
 		 
 		 Log.d(DEBUG_TAG, "starting view initialization...");
 		 player = MediaPlayer.create(this, soundCache.get(3)) ;
 		 player.start() ;
+=======
+		
+		
+		mediaPlayer = MediaPlayer.create(this, R.raw.robotsummer);
+		mediaPlayer.setLooping(true);
+		mediaPlayer.start();
+		Log.d(DEBUG_TAG, "starting view initialization...");
+		//soundPool.play(soundCache.get(3), 1F, 1F, 3, -1, 1F) ;
+>>>>>>> 8a13933abe9ba02af570b35a63ee9b9ac84a590f
 		 TitleScreen titleScreen = new TitleScreen(this) ;
 		 setContentView(titleScreen) ;
 		  
@@ -89,6 +101,25 @@ public class EinsteinDefenseActivity extends Activity {
 		imageCache.put(R.drawable.background, BitmapFactory.decodeResource(getResources(), R.drawable.background));
 		imageCache.put(R.drawable.logo, BitmapFactory.decodeResource(getResources(), R.drawable.logo));
 		imageCache.put(R.drawable.einstein, BitmapFactory.decodeResource(getResources(), R.drawable.einstein));
+		imageCache.put(R.drawable.help, BitmapFactory.decodeResource(getResources(), R.drawable.help));
+		imageCache.put(R.drawable.background_lvl2, BitmapFactory.decodeResource(getResources(), R.drawable.background_lvl2));
+		imageCache.put(R.drawable.background_lvl3, BitmapFactory.decodeResource(getResources(), R.drawable.background_lvl3));
+		imageCache.put(R.drawable.background_lvl4, BitmapFactory.decodeResource(getResources(), R.drawable.background_lvl4));
+		imageCache.put(R.drawable.einstein_tiny, BitmapFactory.decodeResource(getResources(), R.drawable.einstein_tiny));
+		imageCache.put(R.drawable.einstein_large, BitmapFactory.decodeResource(getResources(), R.drawable.einstein_large));
+		imageCache.put(R.drawable.einstein_huge, BitmapFactory.decodeResource(getResources(), R.drawable.einstein_huge));
+		imageCache.put(R.drawable.einstein_super_tiny, BitmapFactory.decodeResource(getResources(), R.drawable.einstein_super_tiny));
+		imageCache.put(R.drawable.einstein_super_large, BitmapFactory.decodeResource(getResources(), R.drawable.einstein_super_large));
+		imageCache.put(R.drawable.einstein_super_huge, BitmapFactory.decodeResource(getResources(), R.drawable.einstein_super_huge));
+		imageCache.put(R.drawable.einstein_super, BitmapFactory.decodeResource(getResources(), R.drawable.einstein_super));
+		imageCache.put(R.drawable.cow_small, BitmapFactory.decodeResource(getResources(), R.drawable.cow_small));
+		imageCache.put(R.drawable.tree_small, BitmapFactory.decodeResource(getResources(), R.drawable.tree_small));
+		imageCache.put(R.drawable.rock_small, BitmapFactory.decodeResource(getResources(), R.drawable.rock_small));
+		imageCache.put(R.drawable.iceberg_small, BitmapFactory.decodeResource(getResources(), R.drawable.iceberg_small));
+		imageCache.put(R.drawable.cow_large, BitmapFactory.decodeResource(getResources(), R.drawable.cow_large));
+		imageCache.put(R.drawable.tree_large, BitmapFactory.decodeResource(getResources(), R.drawable.tree_large));
+		imageCache.put(R.drawable.rock_large, BitmapFactory.decodeResource(getResources(), R.drawable.rock_large));
+		imageCache.put(R.drawable.iceberg_large, BitmapFactory.decodeResource(getResources(), R.drawable.iceberg_large));
 		
 	}
 	

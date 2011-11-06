@@ -13,38 +13,38 @@ public class LevelInitializerSample extends LevelInitializer {
 	public LevelInitializerSample(List<CollidableThing> invaders,
 			List<CollidableThing> projectilesActive,
 			List<CollidableThing> projectilesInactive) {
-		super(invaders, projectilesActive, projectilesInactive);
+		super(invaders, projectilesActive, projectilesInactive, null);
 	}
 
 	@Override
 	public void initializeLists(int level) {
 		switch (level) {
 		case 0:
-			CollidableThing thing1 = new CollidableCow();
+			CollidableThing thing1 = new CollidableCow("medium");
 			thing1.setX(10);
 			thing1.setY(600);
 			thing1.setMass(3);
 			projectilesInactive.add(thing1);
 			
-			CollidableThing thing2 = new CollidableCow();
+			CollidableThing thing2 = new CollidableCow("medium");
 			thing2.setX(600);
 			thing2.setY(640);
 			thing2.setMass(3);
 			projectilesInactive.add(thing2);
 			
-			CollidableThing thing4 = new CollidableTree();
+			CollidableThing thing4 = new CollidableTree("medium");
 			thing4.setX(400);
 			thing4.setY(610);
 			thing4.setMass(3);
 			projectilesInactive.add(thing4);
 			
-			CollidableThing thing5 = new CollidableIceberg();
+			CollidableThing thing5 = new CollidableIceberg("medium");
 			thing5.setX(900);
 			thing5.setY(590);
 			thing5.setMass(3);
 			projectilesInactive.add(thing5);
 			
-			CollidableThing thing6 = new CollidableIceberg();
+			CollidableThing thing6 = new CollidableIceberg("medium");
 			thing6.setX(1050);
 			thing6.setY(640);
 			thing6.setMass(3);

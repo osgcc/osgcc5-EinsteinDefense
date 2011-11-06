@@ -18,6 +18,7 @@ import android.content.res.Resources;
 import android.util.Log;
 
 import org.osgcc.osgcc5.soapydroid.EinsteinDefenseActivity;
+import org.osgcc.osgcc5.soapydroid.EinsteinDefensePanel;
 import org.osgcc.osgcc5.soapydroid.R;
 
 //Loads the data for each new level
@@ -26,9 +27,10 @@ public class LevelData extends LevelInitializer{
 	Scanner scanner;
 	public LevelData(List<CollidableThing> invaders,
 			List<CollidableThing> projectilesActive,
-			List<CollidableThing> projectilesInactive) throws FileNotFoundException {
-		super(invaders, projectilesActive, projectilesInactive);
-		// TODO Auto-generated constructor stub
+			List<CollidableThing> projectilesInactive,
+			EinsteinDefensePanel panel) throws FileNotFoundException {
+		super(invaders, projectilesActive, projectilesInactive, panel);
+		
 		InputStream reader = EinsteinDefenseActivity.getTextCache().get(R.raw.leveldata);
 		scanner = new Scanner(reader);
 	}
@@ -50,6 +52,9 @@ public class LevelData extends LevelInitializer{
 			 * delay system so all Einsteins don't fall at once
 			 * 
 			 */
+			
+			// TODO set background
+			
 			thingType = scanner.next();
 			if(!thingType.equals("Einstein"))
 			{
