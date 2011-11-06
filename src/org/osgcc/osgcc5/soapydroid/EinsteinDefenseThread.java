@@ -170,7 +170,7 @@ public class EinsteinDefenseThread extends Thread {
 							scoreManager.decrementLife();
 							// create an explosion here
 							
-						    soundPool.play(soundCache.get(1), 1F, 1F, 1, 0, 1F) ;
+						    soundPool.play(soundCache.get(0), 1F, 1F, 1, 0, 1F) ;
 							
 							invaders.remove(invader);
 						}
