@@ -39,41 +39,48 @@ public class LevelData extends LevelInitializer{
 		int numberOfThings = scanner.nextInt();
 		CollidableThing[] thingsArray = new CollidableThing[numberOfThings];
 		String thingType = "";
+		String size = "";
+		int score = 0;
 		for(int k = 0; k < thingsArray.length; k++ )
 		{
+			//loops through the text file one line at a time to get info for lvls
+			
+			/*
+			 * Things to add:
+			 * delay system so all Einsteins don't fall at once
+			 * 
+			 */
 			thingType = scanner.next();
-			if(thingType.equals("Tree"))
-				thingsArray[k] = new CollidableTree();
-			else if(thingType.equals("Rock"))
-				thingsArray[k] = new CollidableRock();
-			else if(thingType.equals("Cow"))
-				thingsArray[k] = new CollidableCow();
-			else if(thingType.equals("Iceberg"))
-				thingsArray[k] = new CollidableIceberg();
-			else if(thingType.equals("Einstein"))
-				thingsArray[k] = new CollidableEinstein();
-			else if(thingType.equals("SuperEinstein"))
-				thingsArray[k] = new CollidableEinstein();
+			if(!thingType.equals("Einstein"))
+			{
+				size = scanner.next();
+				if(thingType.equals("Tree"))
+					thingsArray[k] = new CollidableTree(size);
+				else if(thingType.equals("Rock"))
+					thingsArray[k] = new CollidableRock(size);
+				else if(thingType.equals("Cow"))
+					thingsArray[k] = new CollidableCow(size);
+				else 
+					thingsArray[k] = new CollidableIceberg(size);
+			}
+			else
+			{
+				score = scanner.nextInt();
+				thingsArray[k] = new CollidableEinstein(score);
+			}
 			
 			thingsArray[k].setX(scanner.nextInt());
 			thingsArray[k].setY(scanner.nextInt());
 			thingsArray[k].setMass(scanner.nextInt());
 			
-			Log.v("EinsteinDefenseActivity", "Type: " + thingType + "\n" +
-											 "x: " + thingsArray[k].getX() + "\n " +
-											 "y: " + thingsArray[k].getY() + "\n " +
-											 "Dx: " + thingsArray[k].getDx() + "\n " +
-											 "Dy: " + thingsArray[k].getDy() + "\n " +
-											 "mass: " + thingsArray[k].getMass() + "\n ");
-			
 			if(thingType.equals("Einstein"))
 			{
 				thingsArray[k].setDy(scanner.nextInt());
-				thingsArray[k].setPoints(scanner.nextInt());
+				thingsArray[k].setPoints(score);
 				invaders.add(thingsArray[k]);
 			}
 			else
-			projectilesInactive.add(thingsArray[k]);
+				projectilesInactive.add(thingsArray[k]);
 		}
 		
 	}
