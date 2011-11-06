@@ -46,15 +46,7 @@ public class LevelData extends LevelInitializer{
 		for(int k = 0; k < thingsArray.length; k++ )
 		{
 			//loops through the text file one line at a time to get info for lvls
-			
-			/*
-			 * Things to add:
-			 * delay system so all Einsteins don't fall at once
-			 * 
-			 */
-			
-			// TODO set background
-			
+
 			thingType = scanner.next();
 			if(!thingType.equals("Einstein"))
 			{
