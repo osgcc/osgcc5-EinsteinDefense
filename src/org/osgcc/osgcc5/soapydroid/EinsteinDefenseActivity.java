@@ -80,6 +80,10 @@ public class EinsteinDefenseActivity extends Activity {
 		  
 		 
 	}
+	
+	public void closeMedia() {
+		mediaPlayer.stop();
+	}
 
 	
 	private void loadBitmaps() {

@@ -201,7 +201,7 @@ public class PhysicsEngine implements CollisionHandler {
 			
 			float xWeight = rotationDetector.getXWeight();
 			float yWeight = rotationDetector.getYWeight();
-			float gravStrength = 1.5f;
+			float gravStrength = 1.3f;
 			// figure out relative portions of gravStrength which belong 
 			//  to x and y 
 			thing.setDx(thing.getDx() + gravStrength*xWeight);

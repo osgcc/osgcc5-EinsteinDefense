@@ -275,6 +275,7 @@ public class EinsteinDefenseThread extends Thread {
 			} catch (InterruptedException e) {
 				// whatevs
 			}
+			((EinsteinDefenseActivity)context).closeMedia();
 			//mainView.onDraw(mainView.getHolder().lockCanvas());
 			//((Activity)context).setContentView(new TitleScreen(context));
 			//EinsteinDefenseActivity.loadTitleScreen();

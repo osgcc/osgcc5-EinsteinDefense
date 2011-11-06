@@ -50,14 +50,14 @@ public class LevelInitializerSample extends LevelInitializer {
 			thing6.setMass(3);
 			projectilesInactive.add(thing6);
 
-			CollidableThing thing3 = new CollidableEinstein();
+			CollidableThing thing3 = new CollidableEinstein(3);
 			thing3.setX(400);
 			thing3.setY(-100);
 			thing3.setMass(1);
 			thing3.setDy(2);
 			invaders.add(thing3);
 			
-			CollidableThing thing7 = new CollidableEinstein();
+			CollidableThing thing7 = new CollidableEinstein(3);
 			thing7.setX(700);
 			thing7.setY(-150);
 			thing7.setMass(1);
