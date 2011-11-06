@@ -94,9 +94,11 @@ GestureDetector.OnDoubleTapListener {
 		
 		if(e2.getY() < maxY)
 		{
-			deltaTime = System.currentTimeMillis() - deltaTime;
+			deltaTime = System.currentTimeMillis() - deltaTime ;
+			
+			float velocityX = ((e2.getX() - pastX) / deltaTime); 
 			float velocityY = ((e2.getY() - pastY) / deltaTime);
-			float velocityX = ((e2.getX() - pastX) / deltaTime);
+			
 			synchronized(activeThings)
 			{
 			movingItem.setDx(velocityX) ;
