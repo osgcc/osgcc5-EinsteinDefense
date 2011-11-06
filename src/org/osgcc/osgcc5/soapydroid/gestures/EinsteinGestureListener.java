@@ -41,9 +41,24 @@ GestureDetector.OnDoubleTapListener {
 	}
 
 	
-	public boolean onDoubleTapEvent(MotionEvent arg0) {
+	public boolean onDoubleTapEvent(MotionEvent e) {
 		// TODO Auto-generated method stub
-		return false;
+		CollidableThing tempCow = null ;
+		for(CollidableThing item: activeThings)
+		{
+			if(item.getType() == "cow")
+			{
+				tempCow = item ;
+				break ;
+			}
+		}
+		if(tempCow != null)
+			synchronized(activeThings)
+			{
+				activeThings.remove(tempCow) ;
+			}
+		
+		return true ;
 	}
 
 	
