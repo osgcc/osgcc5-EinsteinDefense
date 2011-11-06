@@ -14,7 +14,7 @@ public class PhysicsEngine implements CollisionHandler{
 	 */
 	private float findNewVel(float vel_1, float mass1, float vel_2, float mass2)
 	{
-		float numerator = vel_1*(mass2 + mass1)+2*vel_2*mass2;
+		float numerator = vel_1*(mass2 - mass1)+2*vel_2*mass2;
 		float denominator = mass1 + mass2;
 		return numerator/denominator;
 	}
@@ -104,6 +104,10 @@ public class PhysicsEngine implements CollisionHandler{
 			}
 	}
 	
+	public void gravity()
+	{
+		
+	}
 	
 
 	
