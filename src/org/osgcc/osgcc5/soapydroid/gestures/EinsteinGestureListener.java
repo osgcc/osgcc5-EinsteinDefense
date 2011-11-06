@@ -5,6 +5,7 @@ import java.util.List;
 import org.osgcc.osgcc5.soapydroid.EinsteinDefensePanel;
 import org.osgcc.osgcc5.soapydroid.things.CollidableThing;
 
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 
@@ -19,7 +20,7 @@ GestureDetector.OnDoubleTapListener {
 	List<CollidableThing> activeThings ;
 	CollidableThing       movingItem   ;
 	float                 maxY         ;
-	
+	public static final String DEBUG_TAG = "Gesture Listener" ;
 	public EinsteinGestureListener(EinsteinDefensePanel mainView, List<CollidableThing> collidables, List<CollidableThing> activeList, float maxY) {
 		this.mainView    = mainView    ;
 		this.collidables = collidables ;
@@ -47,6 +48,7 @@ GestureDetector.OnDoubleTapListener {
 	
 	public boolean onDown(MotionEvent e) {
 		// TODO Auto-generated method stub
+		Log.v(DEBUG_TAG, "onDown");
 		movingItem = findSelectedThing(e) ;
 		return true;
 	}
@@ -55,8 +57,10 @@ GestureDetector.OnDoubleTapListener {
 	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
 			float velocityY) {
 		// TODO Auto-generated method stub
-		
-		return false;
+		Log.v(DEBUG_TAG, "onFling")  ;
+		activeThings.add(movingItem) ;
+		movingItem      = null       ;
+		return true;
 	}
 
 	
@@ -72,7 +76,8 @@ GestureDetector.OnDoubleTapListener {
 		
 		if(e2.getY() > maxY)
 		{
-			movingItem = null ;
+			activeThings.add(movingItem) ;
+			movingItem = null            ;
 			
 		}
 		if(movingItem != null)
@@ -80,7 +85,8 @@ GestureDetector.OnDoubleTapListener {
 			movingItem.setX(e2.getX()) ;
 			movingItem.setY(e2.getY()) ;
 		}
-		return false;
+		Log.v(DEBUG_TAG, "OnScroll: Y: " + e2.getY() + " maxY: " + maxY) ;
+		return true;
 	}
 
 	
