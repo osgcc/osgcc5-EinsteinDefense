@@ -13,8 +13,7 @@ public interface CollisionHandler {
 	 * @param onTop 1 = thing1 on top, 2 = thing2 on top, 0 = neither on top (strictly horizontal collision)
 	 * @param onLeft 1 = thing1 on left, 2 = thing2 on left, 0 = neither on left (strictly vertical collision)
 	 */
-	public void collision(CollidableThing thing1, CollidableThing thing2,
-			int onTop, int onLeft);
+	public void collision(CollidableThing thing1, CollidableThing thing2);
 	
 	
 }
