@@ -5,39 +5,35 @@ import java.util.Map;
 
 import org.osgcc.osgcc5.soapydroid.EinsteinDefenseActivity;
 import org.osgcc.osgcc5.soapydroid.EinsteinDefensePanel;
-import org.osgcc.osgcc5.soapydroid.EinsteinDefenseThread;
 import org.osgcc.osgcc5.soapydroid.R;
-import org.osgcc.osgcc5.soapydroid.things.CollidableThing;
 
+
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Matrix;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
-import android.view.SurfaceHolder;
 import android.view.View;
-import android.app.Activity;
 
-public class TitleScreen extends View {
+public class HelpScreen extends View{
 
-	private static final String DEBUG_TAG = "Title Screen";
 	
+	private static final String DEBUG_TAG = "Help Screen";
+	
+	private static Map<Integer, Bitmap> imageCache = EinsteinDefenseActivity.getImageCache() ;
 	GestureDetector listener ;
-	Context         context  ;private static Map<Integer, Bitmap> imageCache = EinsteinDefenseActivity.getImageCache() ;
-	public TitleScreen(Context context) {
+	Context         context  ;
+	
+	public HelpScreen(Context context) {
 		super(context);
 		this.context = context ;
-		
-		listener = new GestureDetector(context, new ButtonPush()) ;
-		
-		
+		listener     = new GestureDetector(context, new ButtonPush()) ;
+		// TODO Auto-generated constructor stub
 	}
-	
-	
-	
+		
 	@Override
 	protected void onDraw(Canvas canvas) {
 		Log.d(DEBUG_TAG, "drawing canvas...");
@@ -45,10 +41,8 @@ public class TitleScreen extends View {
 		//canvas.drawBitmap(imageCache.get(R.drawable.cow), 50, 500, null);
 		
 		// draw background
-		
-		canvas.drawBitmap(imageCache.get(R.drawable.background), 0, 0, null);
-		canvas.drawBitmap(imageCache.get(R.drawable.startbutton), 573F, 500F,  null);
-		canvas.drawBitmap(imageCache.get(R.drawable.helpbutton),  573F, 625F,  null);
+		canvas.drawBitmap(imageCache.get(R.drawable.background), 0, 0, null)      ;
+		canvas.drawBitmap(imageCache.get(R.drawable.okbutton),  573F, 625F,  null);
 		// draw collidable objects
 		// NOTE: must figure out how to draw with rotation!
 		
@@ -56,17 +50,13 @@ public class TitleScreen extends View {
 		// draw inactive projectiles
 		
 		}
-	
+		
 		
 		@Override
 		public boolean onTouchEvent(MotionEvent event) {
 			return listener.onTouchEvent(event);
 		}
-		
-		
-		
-		
-	
+
 	private class ButtonPush implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener{
 
 		@Override
@@ -77,14 +67,10 @@ public class TitleScreen extends View {
 					Log.v("onDown", "") ;
 			if(x >= 573F && x <= 673F)
 			{
-				if(y >= 500F && y <= 600F)
-				{
-					Log.v(DEBUG_TAG, "DETECTED") ;
-					((Activity)context).setContentView(new EinsteinDefensePanel(context)) ;
-				}
+				
 				if(y >= 625F && y <= 725F)
 				{
-					((Activity)context).setContentView(new HelpScreen(context)) ;
+					((Activity)context).setContentView(new TitleScreen(context)) ;
 				}
 			}
 			
@@ -142,5 +128,4 @@ public class TitleScreen extends View {
 		}
 		
 	}
-
 }

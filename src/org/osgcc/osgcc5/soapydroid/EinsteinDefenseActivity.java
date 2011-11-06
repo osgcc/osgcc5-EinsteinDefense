@@ -65,6 +65,9 @@ public class EinsteinDefenseActivity extends Activity {
 
 	
 	private void loadBitmaps() {
+		imageCache.put(R.drawable.okbutton, BitmapFactory.decodeResource(getResources(), R.drawable.okbutton));
+		imageCache.put(R.drawable.helpbutton, BitmapFactory.decodeResource(getResources(), R.drawable.helpbutton));
+		imageCache.put(R.drawable.startbutton, BitmapFactory.decodeResource(getResources(), R.drawable.startbutton));
 		imageCache.put(R.drawable.cow, BitmapFactory.decodeResource(getResources(), R.drawable.cow));
 		imageCache.put(R.drawable.tree, BitmapFactory.decodeResource(getResources(), R.drawable.tree));
 		imageCache.put(R.drawable.rock, BitmapFactory.decodeResource(getResources(), R.drawable.rock));
