@@ -124,8 +124,8 @@ GestureDetector.OnDoubleTapListener {
 		boolean isTouch = false ;
 		for(CollidableThing i: collidables)
 		{
-			if(x >= i.getX() || x <= (i.getX() + i.getWidth()) && y < maxY)
-				if(y <= i.getY() || y >= (i.getY() - i.getHeight()))
+			if(x >= i.getX() && x <= (i.getX() + i.getWidth()) && y < maxY)
+				if(y <= i.getY() && y >= (i.getY() - i.getHeight()))
 						{
 							synchronized(collidables)
 							{
