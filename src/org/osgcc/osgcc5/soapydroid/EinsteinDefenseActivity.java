@@ -4,6 +4,10 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+
+import org.osgcc.osgcc5.soapydroid.R ;
+import org.osgcc.osgcc5.soapydroid.title.TitleScreen;
+
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -52,7 +56,11 @@ public class EinsteinDefenseActivity extends Activity {
 		loadText();
 		
 		Log.d(DEBUG_TAG, "starting view initialization...");
-		setContentView(new EinsteinDefensePanel(this));
+		
+		 TitleScreen test = new TitleScreen(this) ;
+		 setContentView(test) ;
+		  
+		 
 	}
 
 	

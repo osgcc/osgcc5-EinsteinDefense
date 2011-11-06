@@ -144,8 +144,8 @@ GestureDetector.OnDoubleTapListener {
 		// TODO Auto-generated method stub
 		float x = event.getX() ;
 		float y = event.getY() ;
-		pastX = x ;
-		pastY = y ;
+		pastX   = x            ;
+		pastY   = y            ;
 		
 		boolean isTouch = false ;
 		for(CollidableThing i: collidables)
