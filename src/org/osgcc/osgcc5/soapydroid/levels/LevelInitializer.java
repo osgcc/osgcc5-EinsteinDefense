@@ -23,6 +23,8 @@ public abstract class LevelInitializer {
 	 * NOTE: this will be used by multiple threads. Make sure to synchronize!
 	 */
 	protected List<CollidableThing> projectilesInactive;
+	
+	protected int currentLevel;
 
 	public LevelInitializer(List<CollidableThing> invaders,
 			List<CollidableThing> projectilesActive,
@@ -31,9 +33,23 @@ public abstract class LevelInitializer {
 		this.invaders = invaders;
 		this.projectilesActive = projectilesActive;
 		this.projectilesInactive = projectilesInactive;
+		currentLevel = 0;
 		
 		
-		
+	}
+	
+	public void resetLists() {
+		invaders.clear();
+		projectilesActive.clear();
+		projectilesInactive.clear();
+	}
+	
+	public int getLevel() {
+		return currentLevel;
+	}
+	
+	public void incrementLevel() {
+		currentLevel++;
 	}
 	
 	public abstract void initializeLists(int level);

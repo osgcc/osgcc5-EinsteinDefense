@@ -11,8 +11,11 @@ import org.osgcc.osgcc5.soapydroid.levels.LevelData;
 import org.osgcc.osgcc5.soapydroid.levels.LevelInitializer;
 import org.osgcc.osgcc5.soapydroid.levels.LevelInitializerSample;
 import org.osgcc.osgcc5.soapydroid.physics.PhysicsEngine;
+import org.osgcc.osgcc5.soapydroid.score.ScoreManager;
 import org.osgcc.osgcc5.soapydroid.things.CollidableThing;
+import org.osgcc.osgcc5.soapydroid.title.TitleScreen;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -31,7 +34,12 @@ public class EinsteinDefensePanel extends SurfaceView implements SurfaceHolder.C
 	
 
 	public static final String DEBUG_TAG = "EinsteinDefenseActivity";
-
+	
+	/**
+	 * Reference to EinsteinDefenseActivity.
+	 */
+	private Context context;
+	
 	/**
 	 * Reference to image cache.
 	 */
@@ -57,6 +65,9 @@ public class EinsteinDefensePanel extends SurfaceView implements SurfaceHolder.C
 	 */
 	private CollidableThing heldOutCollidable;
 	
+	/**
+	 * Controls loading of data for each level.
+	 */
 	private LevelInitializer levelInitializer;
 	
 	/**
@@ -83,23 +94,37 @@ public class EinsteinDefensePanel extends SurfaceView implements SurfaceHolder.C
 	private PhysicsEngine physicsEngine;
 	
 	/**
+	 * Manages current score, high scores.
+	 */
+	private ScoreManager scoreManager;
+	
+	/**
 	 * Ceiling beyond which user should have no fling control.
 	 */
 	private float flingCeiling;
 	
+	/**
+	 * Floor at which invaders esplode!? 
+	 */
+	private float earthFloor;
+	
 	public EinsteinDefensePanel(Context context) {
 		super(context);
 		getHolder().addCallback(this);
+		this.context = context;
 		
 		invaders = new ArrayList<CollidableThing>();
 		projectilesActive = new ArrayList<CollidableThing>();
 		projectilesInactive = new ArrayList<CollidableThing>();
 		heldOutCollidable = null;
 		physicsEngine = new PhysicsEngine();
+		scoreManager = new ScoreManager();
 		
 		// for test: no ceiling
 		//flingCeiling = 0;
 		flingCeiling = 450;
+		
+		earthFloor = 715;
 		
 		//levelInitializer = new LevelInitializerSample(invaders, projectilesActive, projectilesInactive);
 		try {
@@ -111,7 +136,8 @@ public class EinsteinDefensePanel extends SurfaceView implements SurfaceHolder.C
 		
 		gestureListener = new GestureDetector(context, 
 				new EinsteinGestureListener(this, projectilesInactive, projectilesActive, flingCeiling));
-		gameThread = new EinsteinDefenseThread(this, invaders, projectilesActive, projectilesInactive, physicsEngine);
+		gameThread = new EinsteinDefenseThread(this, invaders, projectilesActive, projectilesInactive, 
+				physicsEngine, scoreManager, earthFloor, context, levelInitializer);
 		setFocusable(true);
 		
 		
@@ -128,12 +154,16 @@ public class EinsteinDefensePanel extends SurfaceView implements SurfaceHolder.C
 		canvas.drawBitmap(imageCache.get(R.drawable.background), 0, 0, null);
 		
 		// draw score, etc
-		//canvas.drawText("score:", 900, 50, null);
+		Paint textPainter = new Paint();
+		textPainter.setTextSize(25);
+		textPainter.setAntiAlias(true);
+		canvas.drawText("score: "+scoreManager.getScore(), 1000, 35, textPainter);
+		canvas.drawText("life: "+scoreManager.getLife(), 50, 35, textPainter);
 		
 		// draw line beyond which there's no control
 		Paint linePainter = new Paint();
 		linePainter.setColor(Color.BLACK);
-		linePainter.setAlpha(50);
+		linePainter.setAlpha(35);
 		canvas.drawLine(0, flingCeiling, 1280, flingCeiling, linePainter);
 		
 		// draw collidable objects
@@ -188,6 +218,23 @@ public class EinsteinDefensePanel extends SurfaceView implements SurfaceHolder.C
 			}
 		}
 		
+		if (scoreManager.getLife() == 0) {
+			
+			Paint gameOverPainter = new Paint();
+			gameOverPainter.setTextSize(75);
+			gameOverPainter.setAntiAlias(true);
+			canvas.drawText("GAME OVER :-(   score: "+scoreManager.getScore(), 35, 320, gameOverPainter);
+			
+		} else if (invaders.size() == 0) {
+			
+			Paint levelWinPainter = new Paint();
+			levelWinPainter.setTextSize(75);
+			levelWinPainter.setAntiAlias(true);
+			canvas.drawText("Level "+levelInitializer.getLevel()+" passed! ", 35, 320, levelWinPainter);
+			
+			
+		}
+		
 	}
 
 	
@@ -201,7 +248,9 @@ public class EinsteinDefensePanel extends SurfaceView implements SurfaceHolder.C
 	public void surfaceCreated(SurfaceHolder arg0) {
 		if (!gameThread.isAlive()) {
 			gameThread = new EinsteinDefenseThread(this, invaders, 
-					projectilesActive, projectilesInactive, physicsEngine);
+					projectilesActive, projectilesInactive, 
+					physicsEngine, scoreManager, earthFloor, context, 
+					levelInitializer);
 		}
 		gameThread.setRunning(true);
 		gameThread.start();
@@ -231,6 +280,10 @@ public class EinsteinDefensePanel extends SurfaceView implements SurfaceHolder.C
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		return gestureListener.onTouchEvent(event);
+	}
+	
+	public boolean isThreadRunning() {
+		return gameThread.isRunning();
 	}
 	
 	

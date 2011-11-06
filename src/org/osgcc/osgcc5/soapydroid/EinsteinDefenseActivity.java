@@ -42,10 +42,21 @@ public class EinsteinDefenseActivity extends Activity {
 	
 	private static Map<Integer, InputStream> textCache = new HashMap<Integer, InputStream>();
 	
+	/**
+	 * Reference to title screen.
+	 */
+	private static TitleScreen titleScreen;
+	
+	/**
+	 * Reference to activity object.
+	 */
+	private static EinsteinDefenseActivity activity;
+	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		activity = this;
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		//setContentView(R.layout.main);
 		Log.d(DEBUG_TAG, "loading images...");
@@ -57,8 +68,8 @@ public class EinsteinDefenseActivity extends Activity {
 		
 		Log.d(DEBUG_TAG, "starting view initialization...");
 		
-		 TitleScreen test = new TitleScreen(this) ;
-		 setContentView(test) ;
+		 TitleScreen titleScreen = new TitleScreen(this) ;
+		 setContentView(titleScreen) ;
 		  
 		 
 	}
@@ -96,6 +107,10 @@ public class EinsteinDefenseActivity extends Activity {
 	
 	public static Map<Integer, InputStream> getTextCache() {
 		return textCache;
+	}
+	
+	public static void loadTitleScreen() {
+		activity.setContentView(titleScreen);
 	}
 
 

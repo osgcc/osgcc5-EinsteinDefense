@@ -80,7 +80,9 @@ public class TitleScreen extends View {
 				if(y >= 500F && y <= 600F)
 				{
 					Log.v(DEBUG_TAG, "DETECTED") ;
-					((Activity)context).setContentView(new EinsteinDefensePanel(context)) ;
+					EinsteinDefensePanel panel = new EinsteinDefensePanel(context);
+					((Activity)context).setContentView(panel) ;
+					
 				}
 				if(y >= 625F && y <= 725F)
 				{
