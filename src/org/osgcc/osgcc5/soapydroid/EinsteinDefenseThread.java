@@ -1,6 +1,7 @@
 package org.osgcc.osgcc5.soapydroid;
 
 import java.util.List;
+import java.util.Map;
 
 import org.osgcc.osgcc5.soapydroid.levels.LevelInitializer;
 import org.osgcc.osgcc5.soapydroid.physics.PhysicsEngine;
@@ -10,7 +11,10 @@ import org.osgcc.osgcc5.soapydroid.title.TitleScreen;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Looper;
 import android.util.Log;
 
@@ -57,7 +61,11 @@ public class EinsteinDefenseThread extends Thread {
 	 * NOTE: this will be used by multiple threads. Make sure to synchronize!
 	 */
 	private List<CollidableThing> projectilesInactive;
-
+	/**
+	 * Sounds
+	 */
+	private Map<Integer, Integer> soundCache ;
+	private SoundPool             soundPool  ;
 	/**
 	 * Physics calculator.
 	 */
@@ -97,6 +105,10 @@ public class EinsteinDefenseThread extends Thread {
 		this.earthFloor = earthFloor;
 		this.context = context;
 		this.levelInitializer = levelInitializer;
+		
+		this.soundCache = EinsteinDefenseActivity.getSoundCache() ;
+		
+		this.soundPool  = EinsteinDefenseActivity.getSoundPool() ;
 		
 	}
 
@@ -161,7 +173,9 @@ public class EinsteinDefenseThread extends Thread {
 							} else if (y + height >= earthFloor) {
 								scoreManager.decrementLife();
 								// create an explosion here
-
+								
+								soundPool.play(soundCache.get(1), 1F, 1F, 1, 0, 1F) ;
+								
 								invaders.remove(invader);
 								i--;
 							}
@@ -184,6 +198,7 @@ public class EinsteinDefenseThread extends Thread {
 								projectilesInactive.add(projectile);
 
 							}
+
 						}
 					}
 
