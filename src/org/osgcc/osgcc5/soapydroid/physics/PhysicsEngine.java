@@ -14,9 +14,14 @@ public class PhysicsEngine implements CollisionHandler{
 	 */
 	private float findNewVel(float vel_1, float mass1, float vel_2, float mass2)
 	{
-		float numerator = vel_1*(mass2 - mass1)+2*vel_2*mass2;
+		/*
+		 * float numerator = vel_1*(mass2 - mass1)+2*vel_2*mass2;
 		float denominator = mass1 + mass2;
 		return numerator/denominator;
+		 * 
+		 */
+		return 0;
+		
 	}
 	
 	private float findNewOrientation(CollidableThing thing1, CollidableThing thing2)
@@ -62,7 +67,8 @@ public class PhysicsEngine implements CollisionHandler{
 		if(haveCollided(thing1, thing2))
 		{
 			//First gets new Dy for each object
-			float totalMomentum = thing1.getDy()*thing1.getMass() + thing2.getDy()*thing2.getMass();
+			/*
+			 * float totalMomentum = thing1.getDy()*thing1.getMass() + thing2.getDy()*thing2.getMass();
 			thing1.setDy(findNewVel(thing1.getDy(), thing1.getMass(), thing2.getDy(), thing2.getMass()));
 			thing2.setDy((totalMomentum - thing1.getMass()*thing1.getDy())/thing2.getMass()/50);
 				thing1.setDy(thing1.getDy()/50);
@@ -72,8 +78,20 @@ public class PhysicsEngine implements CollisionHandler{
 			thing1.setDx(findNewVel(thing1.getDx(), thing1.getMass(), thing2.getDx(), thing2.getMass()));
 			thing2.setDx((totalMomentum - thing1.getMass()*thing1.getDx())/thing2.getMass()/50);
 				thing1.setDy(thing1.getDy()/50);
+			 * 
+			 */
 			
-			//sets the new orientations 
+			float temp1 = thing1.getDx();
+			float temp2 = thing1.getDy();
+			
+			thing1.setDx(thing2.getDx());
+			thing1.setDy(thing2.getDy());
+			
+			thing2.setDx(temp1);
+			thing2.setDy(temp2);
+			
+			
+			//sets the new orientations
 		}
 		
 		
