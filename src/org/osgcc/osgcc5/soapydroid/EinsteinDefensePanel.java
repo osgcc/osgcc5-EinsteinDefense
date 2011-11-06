@@ -12,6 +12,7 @@ import org.osgcc.osgcc5.soapydroid.levels.LevelInitializer;
 import org.osgcc.osgcc5.soapydroid.levels.LevelInitializerSample;
 import org.osgcc.osgcc5.soapydroid.physics.PhysicsEngine;
 import org.osgcc.osgcc5.soapydroid.score.ScoreManager;
+import org.osgcc.osgcc5.soapydroid.sensors.RotationDetector;
 import org.osgcc.osgcc5.soapydroid.things.CollidableThing;
 import org.osgcc.osgcc5.soapydroid.title.TitleScreen;
 
@@ -104,6 +105,11 @@ public class EinsteinDefensePanel extends SurfaceView implements SurfaceHolder.C
 	private float flingCeiling;
 	
 	/**
+	 * Class for obtaining current rotation value from orientation sensors.
+	 */
+	private RotationDetector rotationDetector;
+	
+	/**
 	 * Floor at which invaders esplode!? 
 	 */
 	private float earthFloor;
@@ -117,7 +123,8 @@ public class EinsteinDefensePanel extends SurfaceView implements SurfaceHolder.C
 		projectilesActive = new ArrayList<CollidableThing>();
 		projectilesInactive = new ArrayList<CollidableThing>();
 		heldOutCollidable = null;
-		physicsEngine = new PhysicsEngine();
+		rotationDetector = new RotationDetector(context);
+		physicsEngine = new PhysicsEngine(rotationDetector);
 		scoreManager = new ScoreManager();
 		
 		// for test: no ceiling
@@ -223,14 +230,14 @@ public class EinsteinDefensePanel extends SurfaceView implements SurfaceHolder.C
 			Paint gameOverPainter = new Paint();
 			gameOverPainter.setTextSize(75);
 			gameOverPainter.setAntiAlias(true);
-			canvas.drawText("GAME OVER :-(   score: "+scoreManager.getScore(), 35, 320, gameOverPainter);
+			canvas.drawText("GAME OVER  :-(   score: "+scoreManager.getScore(), 55, 320, gameOverPainter);
 			
 		} else if (invaders.size() == 0) {
 			
 			Paint levelWinPainter = new Paint();
 			levelWinPainter.setTextSize(75);
 			levelWinPainter.setAntiAlias(true);
-			canvas.drawText("Level "+levelInitializer.getLevel()+" passed! ", 35, 320, levelWinPainter);
+			canvas.drawText("Level "+levelInitializer.getLevel()+" passed! ", 55, 320, levelWinPainter);
 			
 			
 		}

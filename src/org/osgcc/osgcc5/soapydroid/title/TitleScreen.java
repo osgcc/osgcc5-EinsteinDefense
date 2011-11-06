@@ -46,7 +46,7 @@ public class TitleScreen extends View {
 		
 		// draw background
 		
-		canvas.drawBitmap(imageCache.get(R.drawable.background), 0, 0, null);
+		canvas.drawBitmap(imageCache.get(R.drawable.logo), 0, 0, null);
 		canvas.drawBitmap(imageCache.get(R.drawable.startbutton), 573F, 500F,  null);
 		canvas.drawBitmap(imageCache.get(R.drawable.helpbutton),  573F, 625F,  null);
 		// draw collidable objects
