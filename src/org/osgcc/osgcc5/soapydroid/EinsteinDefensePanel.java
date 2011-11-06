@@ -49,11 +49,12 @@ public class EinsteinDefensePanel extends SurfaceView implements SurfaceHolder.C
 	/**
 	 * Reference to sound cache.
 	 */
-	
+
 	
 	private static Map<Integer, Integer> soundCache = EinsteinDefenseActivity.getSoundCache() ;
 	
 	private static SoundPool soundPool              = EinsteinDefenseActivity.getSoundPool() ;
+
 	
 	/**
 	 * Main game thread; handles collisions, etc.

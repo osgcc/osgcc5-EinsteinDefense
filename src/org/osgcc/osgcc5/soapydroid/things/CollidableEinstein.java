@@ -7,6 +7,7 @@ public class CollidableEinstein extends CollidableThing {
 
 	public CollidableEinstein() {
 		super();
+		setType("einstein");
 		setBitmap(EinsteinDefenseActivity.getImageCache().get(R.drawable.einstein));
 		isEnemy = true;
 	}

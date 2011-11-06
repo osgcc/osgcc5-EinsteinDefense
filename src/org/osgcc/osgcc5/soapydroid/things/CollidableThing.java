@@ -32,8 +32,12 @@ public abstract class CollidableThing {
 	// is invader?
 	protected boolean isEnemy;
 	
+
 	// point value
 	protected int points;
+	
+	// type name
+	protected String type;
 	
 	public CollidableThing() {
 		x = 0;
@@ -49,7 +53,17 @@ public abstract class CollidableThing {
 		width = 1;
 		bitmap = null;
 		isEnemy = false;
+		type = "";
 	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 
 	public int getPoints() {
 		return points;
@@ -58,6 +72,7 @@ public abstract class CollidableThing {
 	public void setPoints(int points) {
 		this.points = points;
 	}
+
 
 	public float getOrientation() {
 		return orientation;

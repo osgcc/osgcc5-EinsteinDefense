@@ -56,7 +56,7 @@ public class PhysicsEngine implements CollisionHandler {
 		return orientation;
 	}
 	
-	private boolean haveCollided(CollidableThing thing1, CollidableThing thing2)
+	public boolean haveCollided(CollidableThing thing1, CollidableThing thing2)
 	{
 		boolean collided = false;
 		//checks to see if they collided by top or bottom of squares
@@ -97,8 +97,8 @@ public class PhysicsEngine implements CollisionHandler {
 	 */
 	
 	public void collision(CollidableThing thing1, CollidableThing thing2) {
-		if(haveCollided(thing1, thing2))
-		{
+		//if(haveCollided(thing1, thing2))
+		//{
 			//First gets new Dy for each object
 			/*
 			float totalMomentum = thing1.getDy()*thing1.getMass() + thing2.getDy()*thing2.getMass();
@@ -135,25 +135,21 @@ public class PhysicsEngine implements CollisionHandler {
 			///*
 			float mass1 = thing1.getMass();
 			float mass2 = thing2.getMass();
-			float ratio1 = mass1 / mass2;
-			float ratio2 = 1 - ratio1;
-			if (mass1 > mass2) {
-				ratio2 = mass2 / mass1;
-				ratio1 = 1 - ratio2;
-			}
-
-			float temp1x = thing1.getDx();
-			float temp1y = thing1.getDy();
 			
-			thing1.setDx(thing2.getDx());
-			thing1.setDy(thing2.getDy());
+			float force1x = thing1.getDx() * mass1;
+			float force2x = thing2.getDx() * mass2;
+			float force1y = thing1.getDy() * mass1;
+			float force2y = thing2.getDy() * mass2;
 			
-			thing2.setDx(temp1x);
-			thing2.setDy(temp1y);
+			thing1.setDx(force2x / mass1);
+			thing1.setDy(force2y / mass1);
+			
+			thing2.setDx(force1x / mass2);
+			thing2.setDy(force1y / mass2);
 			//*/
 			
 			//sets the new orientations
-		}
+		//}
 		
 		
 	}
