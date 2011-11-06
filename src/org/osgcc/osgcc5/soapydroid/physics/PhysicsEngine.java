@@ -107,9 +107,9 @@ public class PhysicsEngine implements CollisionHandler{
 				collisionWall(thing);
 			}
 			//keeps objects from going past the right side of the screen and bounces it to the left
-			if(thing.getX() + thing.getWidth() >= 1980)//1980 should be width of screen
+			if(thing.getX() + thing.getWidth() >= 1280)//1980 should be width of screen
 			{
-				thing.setX(1980 - thing.getWidth());
+				thing.setX(1280 - thing.getWidth());
 				collisionWall(thing);
 			}
 	}
