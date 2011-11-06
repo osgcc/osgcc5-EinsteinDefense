@@ -2,6 +2,7 @@ package org.osgcc.osgcc5.soapydroid;
 
 import java.util.List;
 
+import org.osgcc.osgcc5.soapydroid.physics.PhysicsEngine;
 import org.osgcc.osgcc5.soapydroid.things.CollidableThing;
 
 import android.graphics.Canvas;
@@ -39,16 +40,23 @@ public class EinsteinDefenseThread extends Thread {
 	 * NOTE: this will be used by multiple threads. Make sure to synchronize!
 	 */
 	private List<CollidableThing> projectilesInactive;
+
+	/**
+	 * Physics calculator.
+	 */
+	private PhysicsEngine physicsEngine;
 	
 	public EinsteinDefenseThread(EinsteinDefensePanel mainView, 
 			List<CollidableThing> invaders, 
 			List<CollidableThing> projectilesActive,
-			List<CollidableThing> projectilesInactive) {
+			List<CollidableThing> projectilesInactive,
+			PhysicsEngine physicsEngine) {
 		this.mainView = mainView;
 		
 		this.invaders = invaders;
 		this.projectilesActive = projectilesActive;
 		this.projectilesInactive = projectilesInactive;
+		this.physicsEngine = physicsEngine;
 		
 	}
 
@@ -73,19 +81,19 @@ public class EinsteinDefenseThread extends Thread {
 					// this is currently very inefficient, fix later
 					for (CollidableThing invader : invaders) {
 						for (CollidableThing projectile : projectilesActive) {
-							
+							physicsEngine.collision(projectile, invader);
 						}
 					}
 					
 					// update positions
 					for (CollidableThing invader : invaders) {
-						
+						physicsEngine.updatePosition(invader);
 					}
 					for (CollidableThing projectile : projectilesActive) {
-						
+						physicsEngine.updatePosition(projectile);
 					}
 
-					// update images
+					// update image positions
 					mainView.onDraw(canvas);
 
 					// check level status? remove pieces outside of bounds?

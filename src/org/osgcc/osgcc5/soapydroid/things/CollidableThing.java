@@ -23,6 +23,9 @@ public abstract class CollidableThing {
 	protected float height;
 	protected float width;
 
+	// rotation
+	protected float orientation;
+	
 	// bitmap
 	protected Bitmap bitmap;
 	
@@ -36,11 +39,20 @@ public abstract class CollidableThing {
 		dy = 0;
 		accx = 0;
 		accy = 0;
+		orientation = 0;
 		mass = 1;
 		height = 1;
 		width = 1;
 		bitmap = null;
 		isEnemy = false;
+	}
+
+	public float getOrientation() {
+		return orientation;
+	}
+
+	public void setOrientation(float orientation) {
+		this.orientation = orientation;
 	}
 
 	public boolean isEnemy() {

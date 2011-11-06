@@ -8,12 +8,14 @@ import java.util.Map;
 import org.osgcc.osgcc5.soapydroid.gestures.EinsteinGestureListener;
 import org.osgcc.osgcc5.soapydroid.levels.LevelInitializer;
 import org.osgcc.osgcc5.soapydroid.levels.LevelInitializerSample;
+import org.osgcc.osgcc5.soapydroid.physics.PhysicsEngine;
 import org.osgcc.osgcc5.soapydroid.things.CollidableThing;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.media.SoundPool;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -72,6 +74,11 @@ public class EinsteinDefensePanel extends SurfaceView implements SurfaceHolder.C
 	private List<CollidableThing> projectilesInactive;
 	
 	/**
+	 * Physics calculator.
+	 */
+	private PhysicsEngine physicsEngine;
+	
+	/**
 	 * Ceiling beyond which user should have no fling control.
 	 */
 	private float flingCeiling;
@@ -84,6 +91,7 @@ public class EinsteinDefensePanel extends SurfaceView implements SurfaceHolder.C
 		projectilesActive = new ArrayList<CollidableThing>();
 		projectilesInactive = new ArrayList<CollidableThing>();
 		heldOutCollidable = null;
+		physicsEngine = new PhysicsEngine();
 		
 		// for test: no ceiling
 		flingCeiling = 0;
@@ -93,7 +101,7 @@ public class EinsteinDefensePanel extends SurfaceView implements SurfaceHolder.C
 		
 		gestureListener = new GestureDetector(context, 
 				new EinsteinGestureListener(this, projectilesInactive, projectilesActive, flingCeiling));
-		gameThread = new EinsteinDefenseThread(this, invaders, projectilesActive, projectilesInactive);
+		gameThread = new EinsteinDefenseThread(this, invaders, projectilesActive, projectilesInactive, physicsEngine);
 		setFocusable(true);
 		
 		
@@ -115,24 +123,49 @@ public class EinsteinDefensePanel extends SurfaceView implements SurfaceHolder.C
 		// draw inactive projectiles
 		synchronized (projectilesInactive) {
 			for (CollidableThing thing : projectilesInactive) {
-				canvas.drawBitmap(thing.getBitmap(), thing.getX(), thing.getY(), null);
+				Matrix matrix = new Matrix();
+				float x = thing.getX();
+				float y = thing.getY();
+				float rotation = thing.getOrientation();
+				matrix.postTranslate(x, y);
+				matrix.postRotate(rotation);
+				canvas.drawBitmap(thing.getBitmap(), matrix, null);
 			}
 		}
 		
 		// draw invaders
 		synchronized (invaders) {
 			for (CollidableThing thing : invaders) {
-				canvas.drawBitmap(thing.getBitmap(), thing.getX(), thing.getY(), null);
+				Matrix matrix = new Matrix();
+				float x = thing.getX();
+				float y = thing.getY();
+				float rotation = thing.getOrientation();
+				matrix.postTranslate(x, y);
+				matrix.postRotate(rotation);
+				canvas.drawBitmap(thing.getBitmap(), matrix, null);
 			}
 		}
 		
 		// draw active projectiles and held-out item
 		synchronized (projectilesActive) {
 			for (CollidableThing thing : projectilesActive) {
-				canvas.drawBitmap(thing.getBitmap(), thing.getX(), thing.getY(), null);
+				Matrix matrix = new Matrix();
+				float x = thing.getX();
+				float y = thing.getY();
+				float rotation = thing.getOrientation();
+				matrix.postTranslate(x, y);
+				matrix.postRotate(rotation);
+				canvas.drawBitmap(thing.getBitmap(), matrix, null);
 			}
 			if (heldOutCollidable != null) {
-				canvas.drawBitmap(heldOutCollidable.getBitmap(), heldOutCollidable.getX(), heldOutCollidable.getY(), null);
+				CollidableThing thing = heldOutCollidable;
+				Matrix matrix = new Matrix();
+				float x = thing.getX();
+				float y = thing.getY();
+				float rotation = thing.getOrientation();
+				matrix.postTranslate(x, y);
+				matrix.postRotate(rotation);
+				canvas.drawBitmap(thing.getBitmap(), matrix, null);
 			}
 		}
 		
@@ -149,7 +182,7 @@ public class EinsteinDefensePanel extends SurfaceView implements SurfaceHolder.C
 	public void surfaceCreated(SurfaceHolder arg0) {
 		if (!gameThread.isAlive()) {
 			gameThread = new EinsteinDefenseThread(this, invaders, 
-					projectilesActive, projectilesInactive);
+					projectilesActive, projectilesInactive, physicsEngine);
 		}
 		gameThread.setRunning(true);
 		gameThread.start();
