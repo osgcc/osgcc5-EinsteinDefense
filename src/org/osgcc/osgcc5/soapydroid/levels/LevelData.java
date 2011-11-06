@@ -62,7 +62,11 @@ public class LevelData extends LevelInitializer{
 											 "mass: " + thingsArray[k].getMass() + "\n ");
 			
 			if(thingType.equals("Einstein"))
+			{
 				thingsArray[k].setDy(scanner.nextInt());
+				invaders.add(thingsArray[k]);
+			}
+			else
 			projectilesInactive.add(thingsArray[k]);
 		}
 		
