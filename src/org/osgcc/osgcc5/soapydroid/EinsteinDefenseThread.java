@@ -169,6 +169,23 @@ public class EinsteinDefenseThread extends Thread {
 						}
 
 					}
+					
+					// special rules
+					// icebergs = reuse if they land on the ground
+					synchronized (projectilesActive) {
+						for (int i=0; i<invaders.size(); i++) {
+							CollidableThing projectile = projectilesActive.get(i);
+							if (projectile.getType().equals("iceberg") && 
+									(projectile.getY()+projectile.getHeight()) >= earthFloor) {
+								
+								projectile.setDx(0);
+								projectile.setDy(0);
+								projectilesActive.remove(projectile);
+								projectilesInactive.add(projectile);
+
+							}
+						}
+					}
 
 
 					// update image positions
