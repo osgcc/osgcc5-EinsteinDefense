@@ -38,7 +38,7 @@ public class EinsteinDefenseActivity extends Activity {
 	/**
 	 * Cache for all sound files.
 	 */
-	private static SoundPool soundPool = new SoundPool(4, AudioManager.STREAM_MUSIC, 100) ;
+	private static SoundPool soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 100) ;
 	private static Map<Integer, Integer> soundCache = new HashMap<Integer, Integer>() ;
 	//private static SoundPool soundCache = new SoundPool(maxStreams, streamType, srcQuality);
 	
@@ -69,7 +69,7 @@ public class EinsteinDefenseActivity extends Activity {
 		loadText();
 		
 		Log.d(DEBUG_TAG, "starting view initialization...");
-		
+		soundPool.play(soundCache.get(3), 1F, 1F, 3, 0, 1F) ;
 		 TitleScreen titleScreen = new TitleScreen(this) ;
 		 setContentView(titleScreen) ;
 		  
@@ -93,7 +93,10 @@ public class EinsteinDefenseActivity extends Activity {
 	}
 	
 	private void loadSounds() {
-		soundCache.put(1, soundPool.load(this, R.raw.explosion, 1)) ;
+		soundCache.put(0, soundPool.load(this, R.raw.explosion, 1)) ;
+		soundCache.put(1, soundPool.load(this, R.raw.button3, 1)) ;
+		soundCache.put(2, soundPool.load(this, R.raw.button10, 1)) ;
+		soundCache.put(3, soundPool.load(this, R.raw.robotsummer, 3)) ;
 		
 		
 	}
