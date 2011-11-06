@@ -13,6 +13,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Looper;
@@ -134,9 +135,28 @@ public class EinsteinDefenseThread extends Thread {
 					// detect and handle collisions
 					// this is currently very inefficient, fix later
 					synchronized (projectilesActive) {
-						for (CollidableThing invader : invaders) {
-							for (CollidableThing projectile : projectilesActive) {
-								physicsEngine.collision(projectile, invader);
+						for (int i=0; i<invaders.size(); i++) {
+							CollidableThing invader = invaders.get(i);
+							for (int j=0; j<projectilesActive.size(); j++) {
+								CollidableThing projectile = projectilesActive.get(j);
+								if (physicsEngine.haveCollided(projectile, invader)) {
+									physicsEngine.collision(projectile, invader);
+									if (projectile.getType().equals("iceberg")) {
+										float mass = projectile.getMass();
+										float newMass = mass - 1;
+										if (newMass == 0) {
+											projectilesActive.remove(projectile);
+											j--;
+										} else {
+											projectile.setMass(newMass);
+											Bitmap bitmap = projectile.getBitmap();
+											Matrix matrix = new Matrix();
+											matrix.postScale(newMass/mass, newMass/mass);
+											Bitmap newBitmap = Bitmap.createBitmap(bitmap, 0, 0, (int)projectile.getWidth(), (int)projectile.getHeight(), matrix, false);
+											projectile.setBitmap(newBitmap);
+										}
+									}
+								}
 							}
 						}
 					}
@@ -187,7 +207,7 @@ public class EinsteinDefenseThread extends Thread {
 					// special rules
 					// icebergs = reuse if they land on the ground
 					synchronized (projectilesActive) {
-						for (int i=0; i<invaders.size(); i++) {
+						for (int i=0; i<projectilesActive.size(); i++) {
 							CollidableThing projectile = projectilesActive.get(i);
 							if (projectile.getType().equals("iceberg") && 
 									(projectile.getY()+projectile.getHeight()) >= earthFloor) {

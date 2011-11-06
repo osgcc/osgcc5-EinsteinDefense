@@ -56,7 +56,7 @@ public class PhysicsEngine implements CollisionHandler {
 		return orientation;
 	}
 	
-	private boolean haveCollided(CollidableThing thing1, CollidableThing thing2)
+	public boolean haveCollided(CollidableThing thing1, CollidableThing thing2)
 	{
 		boolean collided = false;
 		//checks to see if they collided by top or bottom of squares
@@ -97,8 +97,8 @@ public class PhysicsEngine implements CollisionHandler {
 	 */
 	
 	public void collision(CollidableThing thing1, CollidableThing thing2) {
-		if(haveCollided(thing1, thing2))
-		{
+		//if(haveCollided(thing1, thing2))
+		//{
 			//First gets new Dy for each object
 			/*
 			float totalMomentum = thing1.getDy()*thing1.getMass() + thing2.getDy()*thing2.getMass();
@@ -149,7 +149,7 @@ public class PhysicsEngine implements CollisionHandler {
 			//*/
 			
 			//sets the new orientations
-		}
+		//}
 		
 		
 	}
