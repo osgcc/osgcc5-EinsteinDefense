@@ -28,6 +28,20 @@ public abstract class CollidableThing {
 	
 	// is invader?
 	protected boolean isEnemy;
+	
+	public CollidableThing() {
+		x = 0;
+		y = 0;
+		dx = 0;
+		dy = 0;
+		accx = 0;
+		accy = 0;
+		mass = 1;
+		height = 1;
+		width = 1;
+		bitmap = null;
+		isEnemy = false;
+	}
 
 	public boolean isEnemy() {
 		return isEnemy;
@@ -59,6 +73,8 @@ public abstract class CollidableThing {
 
 	public void setBitmap(Bitmap bitmap) {
 		this.bitmap = bitmap;
+		height = bitmap.getHeight();
+		width = bitmap.getWidth();
 	}
 
 	public float getX() {
