@@ -69,20 +69,12 @@ public class EinsteinDefenseActivity extends Activity {
 		loadSounds();
 		Log.d(DEBUG_TAG, "loading text...");
 		loadText();
-<<<<<<< HEAD
-		 
-		 Log.d(DEBUG_TAG, "starting view initialization...");
-		 player = MediaPlayer.create(this, soundCache.get(3)) ;
-		 player.start() ;
-=======
-		
 		
 		mediaPlayer = MediaPlayer.create(this, R.raw.robotsummer);
 		mediaPlayer.setLooping(true);
 		mediaPlayer.start();
 		Log.d(DEBUG_TAG, "starting view initialization...");
 		//soundPool.play(soundCache.get(3), 1F, 1F, 3, -1, 1F) ;
->>>>>>> 8a13933abe9ba02af570b35a63ee9b9ac84a590f
 		 TitleScreen titleScreen = new TitleScreen(this) ;
 		 setContentView(titleScreen) ;
 		  
@@ -120,6 +112,9 @@ public class EinsteinDefenseActivity extends Activity {
 		imageCache.put(R.drawable.tree_large, BitmapFactory.decodeResource(getResources(), R.drawable.tree_large));
 		imageCache.put(R.drawable.rock_large, BitmapFactory.decodeResource(getResources(), R.drawable.rock_large));
 		imageCache.put(R.drawable.iceberg_large, BitmapFactory.decodeResource(getResources(), R.drawable.iceberg_large));
+		imageCache.put(R.drawable.explosion1, BitmapFactory.decodeResource(getResources(), R.drawable.explosion1));
+		imageCache.put(R.drawable.explosion2, BitmapFactory.decodeResource(getResources(), R.drawable.explosion2));
+		imageCache.put(R.drawable.explosion3, BitmapFactory.decodeResource(getResources(), R.drawable.explosion3));
 		
 	}
 	

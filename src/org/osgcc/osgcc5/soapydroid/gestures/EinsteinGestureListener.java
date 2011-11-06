@@ -3,11 +3,14 @@ package org.osgcc.osgcc5.soapydroid.gestures;
 import java.util.List;
 
 import org.osgcc.osgcc5.soapydroid.EinsteinDefensePanel;
+import org.osgcc.osgcc5.soapydroid.R;
 import org.osgcc.osgcc5.soapydroid.things.CollidableThing;
 
+import android.graphics.drawable.AnimationDrawable;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.widget.ImageView;
 
 public class EinsteinGestureListener implements GestureDetector.OnGestureListener, 
 GestureDetector.OnDoubleTapListener {
@@ -20,6 +23,7 @@ GestureDetector.OnDoubleTapListener {
 	EinsteinDefensePanel  mainView     ;
 	List<CollidableThing> collidables  ;
 	List<CollidableThing> activeThings ;
+	List<CollidableThing> invaders ;
 	CollidableThing       movingItem   ;
 	float                 maxY         ;
 	long                  deltaTime    ;
@@ -27,11 +31,13 @@ GestureDetector.OnDoubleTapListener {
 	float                 pastY        ;
 	
 	public static final String DEBUG_TAG = "Gesture Listener" ;
-	public EinsteinGestureListener(EinsteinDefensePanel mainView, List<CollidableThing> collidables, List<CollidableThing> activeList, float maxY) {
+	public EinsteinGestureListener(EinsteinDefensePanel mainView, List<CollidableThing> collidables, 
+			List<CollidableThing> activeList,  float maxY, List<CollidableThing> invaders) {
 		this.mainView    = mainView    ;
 		this.collidables = collidables ;
 		this.maxY        = maxY        ;
 		this.activeThings = activeList ;
+		this.invaders = invaders;
 	}
 	
 	 
@@ -52,12 +58,46 @@ GestureDetector.OnDoubleTapListener {
 				break ;
 			}
 		}
-		if(tempCow != null)
+		if(tempCow != null) {
 			synchronized(activeThings)
 			{
 				activeThings.remove(tempCow) ;
 			}
-		
+			
+			// find nearby targets
+			float x = tempCow.getX()+tempCow.getWidth()/2;
+			float y = tempCow.getY()+tempCow.getHeight()/2;
+			synchronized (invaders) {
+				for (CollidableThing invader : invaders) {
+					
+					float invaderX = invader.getX()+invader.getWidth()/2;
+					float invaderY = invader.getY()+invader.getHeight()/2;
+					if (Math.abs(invaderX - x) < 80) {
+						float invaderDx = invader.getDx();
+						float invaderMass = invader.getMass();
+						if (invaderX < x) {
+							invader.setDx(invaderDx-10/invaderMass);
+						} else if (x < invaderX) {
+							invader.setDx(invaderDx+10/invaderMass);
+						}
+					}
+					if (Math.abs(invaderY - y) < 80) {
+						float invaderDy = invader.getDy();
+						float invaderMass = invader.getMass();
+						if (invaderY < y) {
+							invader.setDy(invaderDy-10/invaderMass);
+						} else if (y < invaderY) {
+							invader.setDy(invaderDy+10/invaderMass);
+						}
+					}
+					
+				}
+			}
+			
+			mainView.addExplosion(tempCow);
+			
+			
+		}
 		return true ;
 	}
 
@@ -84,8 +124,16 @@ GestureDetector.OnDoubleTapListener {
 		{
 		if(movingItem != null)
 		{
-		movingItem.setDx(velocityX * .03F * DAMPENING_FACTOR) ;
-		movingItem.setDy(velocityY * .03F * DAMPENING_FACTOR) ;
+			float velX = velocityX * .03F * DAMPENING_FACTOR;
+			if (velX > 20) {
+				velX = 20;
+			}
+			float velY = velocityY * .03F * DAMPENING_FACTOR;
+			if (velY > 20) {
+				velY = 20;
+			}
+		movingItem.setDx(velX) ;
+		movingItem.setDy(velY) ;
 		activeThings.add(movingItem) ;
 		}
 		}
@@ -114,14 +162,21 @@ GestureDetector.OnDoubleTapListener {
 			
 			//float velocityX = ((e2.getX() - pastX) / deltaTime); 
 			//float velocityY = ((e2.getY() - pastY) / deltaTime);
-			float velocityX = (e2.getX() - pastX); 
-			float velocityY = (e2.getY() - pastY);
+			float velocityX = (e2.getX() - pastX) * DAMPENING_FACTOR; 
+			float velocityY = (e2.getY() - pastY) * DAMPENING_FACTOR;
+			
+			if (velocityX > 20) {
+				velocityX = 20;
+			}
+			if (velocityY > 20) {
+				velocityY = 20;
+			}
 			
 			synchronized(activeThings)
 			{
 				if (movingItem != null) {
-					movingItem.setDx(velocityX * DAMPENING_FACTOR) ;
-					movingItem.setDy(velocityY * DAMPENING_FACTOR) ;
+					movingItem.setDx(velocityX) ;
+					movingItem.setDy(velocityY) ;
 					activeThings.add(movingItem) ;
 				}
 			}

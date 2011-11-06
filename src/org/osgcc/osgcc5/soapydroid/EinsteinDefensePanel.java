@@ -24,12 +24,15 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.SoundPool;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.ImageView;
 
 public class EinsteinDefensePanel extends SurfaceView implements SurfaceHolder.Callback {
 	
@@ -124,6 +127,12 @@ public class EinsteinDefensePanel extends SurfaceView implements SurfaceHolder.C
 	 */
 	private int currentBackgroundR;
 	
+	/**
+	 * Explosions to draw
+	 */
+	private List<CollidableThing> explosions;
+	private List<Integer> explosionStep;
+	
 	public EinsteinDefensePanel(Context context) {
 		super(context);
 		getHolder().addCallback(this);
@@ -132,6 +141,8 @@ public class EinsteinDefensePanel extends SurfaceView implements SurfaceHolder.C
 		invaders = new ArrayList<CollidableThing>();
 		projectilesActive = new ArrayList<CollidableThing>();
 		projectilesInactive = new ArrayList<CollidableThing>();
+		explosions = new ArrayList<CollidableThing>();
+		explosionStep = new ArrayList<Integer>();
 		heldOutCollidable = null;
 		rotationDetector = new RotationDetector(context);
 		physicsEngine = new PhysicsEngine(rotationDetector);
@@ -153,7 +164,7 @@ public class EinsteinDefensePanel extends SurfaceView implements SurfaceHolder.C
 		levelInitializer.initializeLists(0);
 		
 		gestureListener = new GestureDetector(context, 
-				new EinsteinGestureListener(this, projectilesInactive, projectilesActive, flingCeiling));
+				new EinsteinGestureListener(this, projectilesInactive, projectilesActive, flingCeiling, invaders));
 		gameThread = new EinsteinDefenseThread(this, invaders, projectilesActive, projectilesInactive, 
 				physicsEngine, scoreManager, earthFloor, context, levelInitializer);
 		setFocusable(true);
@@ -236,6 +247,24 @@ public class EinsteinDefensePanel extends SurfaceView implements SurfaceHolder.C
 			}
 		}
 		
+		// draw explosions
+		for (int i=0; i<explosions.size(); i++) {
+			CollidableThing explosion = explosions.get(i);
+			canvas.drawBitmap(explosion.getBitmap(), explosion.getX(), explosion.getY() ,null);
+			int explosionCount = explosionStep.get(i);
+			explosionCount++;
+			explosionStep.set(i, explosionCount);
+			if (explosionCount == 2) {
+				explosion.setBitmap(imageCache.get(R.drawable.explosion2));
+			} else if (explosionCount == 4) {
+				explosion.setBitmap(imageCache.get(R.drawable.explosion3));
+			} else if (explosionCount == 6) {
+				explosions.remove(explosion);
+				explosionStep.remove(i);
+				i--;
+			}
+		}
+		
 		if (scoreManager.getLife() == 0) {
 			
 			Paint gameOverPainter = new Paint();
@@ -308,5 +337,12 @@ public class EinsteinDefensePanel extends SurfaceView implements SurfaceHolder.C
 		currentBackgroundR = backgroundR;
 	}
 	
+	public void addExplosion(CollidableThing thing) {
+		thing.setBitmap(imageCache.get(R.drawable.explosion1));
+		thing.setDx(0);
+		thing.setDy(0);
+		explosions.add(thing);
+		explosionStep.add(0);
+	}
 	
 }
