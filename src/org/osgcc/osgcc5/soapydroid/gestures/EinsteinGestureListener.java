@@ -62,7 +62,7 @@ GestureDetector.OnDoubleTapListener {
 	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
 			float velocityY) {
 		// TODO Auto-generated method stub
-		Log.v(DEBUG_TAG, "onFling")  ;
+		Log.v(DEBUG_TAG, "onFling: "+velocityX+", "+velocityY)  ;
 		synchronized(activeThings)
 		{
 		if(movingItem != null)
