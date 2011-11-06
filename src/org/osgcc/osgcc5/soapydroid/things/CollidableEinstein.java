@@ -4,7 +4,7 @@ import org.osgcc.osgcc5.soapydroid.EinsteinDefenseActivity;
 import org.osgcc.osgcc5.soapydroid.R;
 
 public class CollidableEinstein extends CollidableThing {
-
+	
 	public CollidableEinstein(int score) {
 		super();
 		if(score == 57)

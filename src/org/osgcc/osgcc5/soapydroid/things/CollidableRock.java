@@ -4,7 +4,7 @@ import org.osgcc.osgcc5.soapydroid.EinsteinDefenseActivity;
 import org.osgcc.osgcc5.soapydroid.R;
 
 public class CollidableRock extends CollidableThing {
-
+	
 	public CollidableRock(String size) {
 		super();
 
