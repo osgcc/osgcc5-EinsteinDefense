@@ -39,7 +39,7 @@ public class EinsteinDefenseActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//requestWindowFeature(Window.FEATURE_NO_TITLE);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		//setContentView(R.layout.main);
 		Log.d(DEBUG_TAG, "loading images...");
 		loadBitmaps();
@@ -53,7 +53,9 @@ public class EinsteinDefenseActivity extends Activity {
 	private void loadBitmaps() {
 		imageCache.put(R.drawable.cow, BitmapFactory.decodeResource(getResources(), R.drawable.cow));
 		imageCache.put(R.drawable.tree, BitmapFactory.decodeResource(getResources(), R.drawable.tree));
-		
+		imageCache.put(R.drawable.rock, BitmapFactory.decodeResource(getResources(), R.drawable.rock));
+		imageCache.put(R.drawable.iceberg, BitmapFactory.decodeResource(getResources(), R.drawable.iceberg));
+		imageCache.put(R.drawable.background, BitmapFactory.decodeResource(getResources(), R.drawable.background));
 	}
 	
 	private void loadSounds() {

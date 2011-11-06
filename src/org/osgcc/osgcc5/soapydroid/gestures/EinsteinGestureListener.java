@@ -82,7 +82,7 @@ GestureDetector.OnDoubleTapListener {
 			float distanceX, float distanceY) {
 		// TODO Auto-generated method stub
 		
-		if(e2.getY() > maxY)
+		if(e2.getY() < maxY)
 		{
 			synchronized(activeThings)
 			{
@@ -97,8 +97,8 @@ GestureDetector.OnDoubleTapListener {
 		}
 		if(movingItem != null)
 		{
-			movingItem.setX(e2.getX()) ;
-			movingItem.setY(e2.getY()) ;
+			movingItem.setX(e2.getX() - (movingItem.getWidth()/2)) ;
+			movingItem.setY(e2.getY() - (movingItem.getHeight()/2));
 		}
 		Log.v(DEBUG_TAG, "OnScroll: Y: " + e2.getY() + " maxY: " + maxY) ;
 		return true;
@@ -124,8 +124,12 @@ GestureDetector.OnDoubleTapListener {
 		boolean isTouch = false ;
 		for(CollidableThing i: collidables)
 		{
-			if(x >= i.getX() && x <= (i.getX() + i.getWidth()) && y < maxY)
-				if(y <= i.getY() && y >= (i.getY() - i.getHeight()))
+			float xObj = i.getX();
+			float yObj = i.getY();
+			float height = i.getHeight();
+			float width = i.getWidth();
+			if(x >= xObj && x <= (xObj + width) && y >= maxY)
+				if(y >= yObj && y <= (yObj + height))
 						{
 							synchronized(collidables)
 							{

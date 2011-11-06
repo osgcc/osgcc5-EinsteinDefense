@@ -86,7 +86,7 @@ public class EinsteinDefensePanel extends SurfaceView implements SurfaceHolder.C
 		heldOutCollidable = null;
 		
 		// for test: no ceiling
-		flingCeiling = 9999;
+		flingCeiling = 0;
 		
 		levelInitializer = new LevelInitializerSample(invaders, projectilesActive, projectilesInactive);
 		levelInitializer.initializeLists(0);
@@ -104,9 +104,10 @@ public class EinsteinDefensePanel extends SurfaceView implements SurfaceHolder.C
 	protected void onDraw(Canvas canvas) {
 		Log.d(DEBUG_TAG, "drawing canvas...");
 		// draw test
-		canvas.drawBitmap(imageCache.get(R.drawable.cow), 50, 500, null);
+		//canvas.drawBitmap(imageCache.get(R.drawable.cow), 50, 500, null);
 		
 		// draw background
+		canvas.drawBitmap(imageCache.get(R.drawable.background), 0, 0, null);
 		
 		// draw collidable objects
 		// NOTE: must figure out how to draw with rotation!

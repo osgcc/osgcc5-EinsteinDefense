@@ -19,12 +19,12 @@ public class LevelInitializerSample extends LevelInitializer {
 		case 0:
 			CollidableThing thing1 = new CollidableCow();
 			thing1.setX(10);
-			thing1.setY(600);
+			thing1.setY(400);
 			projectilesInactive.add(thing1);
 			
 			CollidableThing thing2 = new CollidableCow();
 			thing2.setX(600);
-			thing2.setY(600);
+			thing2.setY(400);
 			projectilesInactive.add(thing2);
 			
 			CollidableThing thing3 = new CollidableCow();
