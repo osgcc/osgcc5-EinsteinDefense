@@ -38,6 +38,11 @@ public class LevelData extends LevelInitializer{
 	@Override
 	public void initializeLists(int level) {
 		
+		int mapNum = scanner.nextInt();
+		if(mapNum==1)
+		{
+			
+		}
 		int numberOfThings = scanner.nextInt();
 		CollidableThing[] thingsArray = new CollidableThing[numberOfThings];
 		String thingType = "";
