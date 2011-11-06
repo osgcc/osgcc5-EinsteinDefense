@@ -41,7 +41,43 @@ public class LevelData extends LevelInitializer{
 		int mapNum = scanner.nextInt();
 		if(mapNum==1)
 		{
-			
+			panel.setBackground(R.drawable.background_orig);
+		}
+		else if(mapNum == 2)
+		{
+			panel.setBackground(R.drawable.background_orig_night);
+		}
+		else if(mapNum == 3)
+		{
+			panel.setBackground(R.drawable.background_lvl2day);
+		}
+		else if(mapNum == 4)
+		{
+			panel.setBackground(R.drawable.background_lvl2);
+		}
+		else if(mapNum == 5)
+		{
+			panel.setBackground(R.drawable.background_lvl3);
+		}
+		else if(mapNum == 6)
+		{
+			panel.setBackground(R.drawable.background_lvl3_night);
+		}
+		else if(mapNum == 7)
+		{
+			panel.setBackground(R.drawable.background_lvl4_day);
+		}
+		else if(mapNum == 8)
+		{
+			panel.setBackground(R.drawable.background_lvl4);
+		}
+		else if(mapNum == 9)
+		{
+			panel.setBackground(R.drawable.background_lvl4);
+		}
+		else
+		{
+			panel.setBackground(R.drawable.background);
 		}
 		int numberOfThings = scanner.nextInt();
 		CollidableThing[] thingsArray = new CollidableThing[numberOfThings];
