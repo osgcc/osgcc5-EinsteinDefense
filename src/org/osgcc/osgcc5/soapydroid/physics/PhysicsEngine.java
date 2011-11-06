@@ -73,13 +73,13 @@ public class PhysicsEngine implements CollisionHandler{
 		{
 			//First gets new Dy for each object
 			float totalMomentum = thing1.getDy()*thing1.getMass() + thing2.getDy()*thing2.getMass();
-			thing1.setDy(findNewVel(thing1.getDy(), thing1.getMass(), thing2.getDy(), thing2.getMass()));
-			thing2.setDy((totalMomentum - thing1.getMass()*thing1.getDy())/thing2.getMass());
+			thing1.setDy(findNewVel(thing1.getDy(), thing1.getMass(), thing2.getDy(), thing2.getMass())/50);
+			thing2.setDy((totalMomentum - thing1.getMass()*thing1.getDy())/thing2.getMass()/50);
 		
 			//Gets new Dx for each object
 			totalMomentum = thing1.getDx()*thing1.getMass() + thing2.getDx()*thing2.getMass();
-			thing1.setDx(findNewVel(thing1.getDx(), thing1.getMass(), thing2.getDx(), thing2.getMass()));
-			thing2.setDx((totalMomentum - thing1.getMass()*thing1.getDx())/thing2.getMass());
+			thing1.setDx(findNewVel(thing1.getDx(), thing1.getMass(), thing2.getDx(), thing2.getMass())/50);
+			thing2.setDx((totalMomentum - thing1.getMass()*thing1.getDx())/thing2.getMass()/50);
 			
 			//sets the new orientations 
 		}
@@ -114,8 +114,12 @@ public class PhysicsEngine implements CollisionHandler{
 			}
 	}
 	
-	public void gravity()
+	public void gravity(CollidableThing thing)
 	{
+		//add to dy's to slow down and eventually reverse direction
+		//only affects the player's projectiles
+		if(!thing.isEnemy())
+			thing.setDy((float)(thing.getDy() + .5));
 		
 	}
 	
