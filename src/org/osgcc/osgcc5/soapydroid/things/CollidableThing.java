@@ -25,6 +25,17 @@ public abstract class CollidableThing {
 
 	// bitmap
 	protected Bitmap bitmap;
+	
+	// is invader?
+	protected boolean isEnemy;
+
+	public boolean isEnemy() {
+		return isEnemy;
+	}
+
+	public void setEnemy(boolean isEnemy) {
+		this.isEnemy = isEnemy;
+	}
 
 	public float getHeight() {
 		return height;
