@@ -15,6 +15,7 @@ import org.osgcc.osgcc5.soapydroid.things.CollidableTree;
 
 
 import android.content.res.Resources;
+import android.util.Log;
 
 import org.osgcc.osgcc5.soapydroid.EinsteinDefenseActivity;
 import org.osgcc.osgcc5.soapydroid.R;
@@ -52,6 +53,13 @@ public class LevelData extends LevelInitializer{
 			thingsArray[k].setX(scanner.nextInt());
 			thingsArray[k].setY(scanner.nextInt());
 			thingsArray[k].setMass(scanner.nextInt());
+			
+			Log.v("EinsteinDefenseActivity", "Type: " + thingType + "\n" +
+											 "x: " + thingsArray[k].getX() + "\n " +
+											 "y: " + thingsArray[k].getY() + "\n " +
+											 "Dx: " + thingsArray[k].getDx() + "\n " +
+											 "Dy: " + thingsArray[k].getDy() + "\n " +
+											 "mass: " + thingsArray[k].getMass() + "\n ");
 			
 			if(thingType.equals("Einstein"))
 				thingsArray[k].setDy(scanner.nextInt());
