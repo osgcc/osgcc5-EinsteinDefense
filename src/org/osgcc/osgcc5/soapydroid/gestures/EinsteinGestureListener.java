@@ -1,6 +1,9 @@
 package org.osgcc.osgcc5.soapydroid.gestures;
 
+import java.util.List;
+
 import org.osgcc.osgcc5.soapydroid.EinsteinDefensePanel;
+import org.osgcc.osgcc5.soapydroid.things.CollidableThing;
 
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -11,13 +14,19 @@ GestureDetector.OnDoubleTapListener {
 	/**
 	 * reference to main panel
 	 */
-	EinsteinDefensePanel mainView;
-
-	public EinsteinGestureListener(EinsteinDefensePanel mainView) {
-		this.mainView = mainView;
-	}
-
+	EinsteinDefensePanel  mainView     ;
+	List<CollidableThing> collidables  ;
+	List<CollidableThing> activeThings ;
+	CollidableThing       movingItem   ;
+	float                 maxY         ;
 	
+	public EinsteinGestureListener(EinsteinDefensePanel mainView, List<CollidableThing> collidables, List<CollidableThing> activeList, float maxY) {
+		this.mainView    = mainView    ;
+		this.collidables = collidables ;
+		this.maxY        = maxY        ;
+	}
+	
+	 
 	public boolean onDoubleTap(MotionEvent arg0) {
 		// TODO Auto-generated method stub
 		return false;
@@ -38,13 +47,15 @@ GestureDetector.OnDoubleTapListener {
 	
 	public boolean onDown(MotionEvent e) {
 		// TODO Auto-generated method stub
-		return false;
+		movingItem = findSelectedThing(e) ;
+		return true;
 	}
 
 	
 	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
 			float velocityY) {
 		// TODO Auto-generated method stub
+		
 		return false;
 	}
 
@@ -58,6 +69,17 @@ GestureDetector.OnDoubleTapListener {
 	public boolean onScroll(MotionEvent e1, MotionEvent e2,
 			float distanceX, float distanceY) {
 		// TODO Auto-generated method stub
+		
+		if(e2.getY() > maxY)
+		{
+			movingItem = null ;
+			
+		}
+		if(movingItem != null)
+		{
+			movingItem.setX(e2.getX()) ;
+			movingItem.setY(e2.getY()) ;
+		}
 		return false;
 	}
 
@@ -71,6 +93,28 @@ GestureDetector.OnDoubleTapListener {
 	public boolean onSingleTapUp(MotionEvent e) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+
+	public CollidableThing findSelectedThing(MotionEvent event) {
+		// TODO Auto-generated method stub
+		float x = event.getX() ;
+		float y = event.getY() ;
+		
+		for(CollidableThing i: collidables)
+		{
+			if(x >= i.getX() || x <= (i.getX() + i.getWidth()) && y < maxY)
+				if(y <= i.getY() || y >= (i.getY() - i.getHeight()))
+						{
+							synchronized(mainView.getHolder())
+							{
+							collidables.remove(i) ;
+							}
+							return i ; 
+						}
+		}
+		
+		return null;
 	}
 
 
