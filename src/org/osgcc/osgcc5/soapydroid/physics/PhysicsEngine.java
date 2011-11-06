@@ -1,8 +1,14 @@
 package org.osgcc.osgcc5.soapydroid.physics;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.osgcc.osgcc5.soapydroid.EinsteinDefenseActivity;
 import org.osgcc.osgcc5.soapydroid.sensors.RotationDetector;
 import org.osgcc.osgcc5.soapydroid.things.CollidableThing;
 
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.util.Log;
 
 public class PhysicsEngine implements CollisionHandler {
@@ -13,6 +19,8 @@ public class PhysicsEngine implements CollisionHandler {
 	 * Class for obtaining current rotation value from orientation sensors.
 	 */
 	private RotationDetector rotationDetector;
+	private static SoundPool soundPool = EinsteinDefenseActivity.getSoundPool()               ;
+	private static Map<Integer, Integer> soundCache = EinsteinDefenseActivity.getSoundCache() ;
 	
 	public PhysicsEngine(RotationDetector rotationDetector) {
 		this.rotationDetector = rotationDetector;
@@ -75,6 +83,7 @@ public class PhysicsEngine implements CollisionHandler {
 		
 		if (((top1<=top2 && top2<=bot1) || (top1<=bot2 && bot2<=bot1) || (top2<=top1 && top1<=bot2) || (top2<=bot1 && bot1<=bot2)) && 
 				((left1<=left2 && left2<=right1) || (left1<=right2 && right2<=right1) || (left2<=left1 && left1<=right2) || (left2<=right1 && right1<=right2))) {
+			soundPool.play(soundCache.get(1), 1F, 1F, 0, 0, 1F) ;
 			collided = true;
 		}
 		

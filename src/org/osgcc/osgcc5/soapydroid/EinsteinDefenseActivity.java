@@ -41,8 +41,7 @@ public class EinsteinDefenseActivity extends Activity {
 	 */
 	private static SoundPool soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 100) ;
 	private static Map<Integer, Integer> soundCache = new HashMap<Integer, Integer>() ;
-	//private static SoundPool soundCache = new SoundPool(maxStreams, streamType, srcQuality);
-	
+	private MediaPlayer player ;
 	private static Map<Integer, InputStream> textCache = new HashMap<Integer, InputStream>();
 	
 	/**
@@ -70,6 +69,12 @@ public class EinsteinDefenseActivity extends Activity {
 		loadSounds();
 		Log.d(DEBUG_TAG, "loading text...");
 		loadText();
+<<<<<<< HEAD
+		 
+		 Log.d(DEBUG_TAG, "starting view initialization...");
+		 player = MediaPlayer.create(this, soundCache.get(3)) ;
+		 player.start() ;
+=======
 		
 		
 		mediaPlayer = MediaPlayer.create(this, R.raw.robotsummer);
@@ -77,6 +82,7 @@ public class EinsteinDefenseActivity extends Activity {
 		mediaPlayer.start();
 		Log.d(DEBUG_TAG, "starting view initialization...");
 		//soundPool.play(soundCache.get(3), 1F, 1F, 3, -1, 1F) ;
+>>>>>>> 8a13933abe9ba02af570b35a63ee9b9ac84a590f
 		 TitleScreen titleScreen = new TitleScreen(this) ;
 		 setContentView(titleScreen) ;
 		  
