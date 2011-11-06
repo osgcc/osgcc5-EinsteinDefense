@@ -5,9 +5,14 @@ import org.osgcc.osgcc5.soapydroid.R;
 
 public class CollidableRock extends CollidableThing {
 
-	public CollidableRock() {
+	public CollidableRock(String size) {
 		super();
-		setBitmap(EinsteinDefenseActivity.getImageCache().get(R.drawable.rock));
+		if(size.equals("small"))
+			setBitmap(EinsteinDefenseActivity.getImageCache().get(R.drawable.tree_small));
+		else if(size.equals("medium"))
+			setBitmap(EinsteinDefenseActivity.getImageCache().get(R.drawable.tree));
+		else
+			setBitmap(EinsteinDefenseActivity.getImageCache().get(R.drawable.tree_large));
 		isEnemy = false;
 	}
 	
