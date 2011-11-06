@@ -2,6 +2,7 @@ package org.osgcc.osgcc5.soapydroid.levels;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Scanner;
 
@@ -11,6 +12,10 @@ import org.osgcc.osgcc5.soapydroid.things.CollidableIceberg;
 import org.osgcc.osgcc5.soapydroid.things.CollidableThing;
 import org.osgcc.osgcc5.soapydroid.things.CollidableTree;
 
+
+import android.content.res.Resources;
+import org.osgcc.osgcc5.soapydroid.R;
+
 public class LevelData extends LevelInitializer{
 
 	Scanner scanner;
@@ -19,7 +24,7 @@ public class LevelData extends LevelInitializer{
 			List<CollidableThing> projectilesInactive) throws FileNotFoundException {
 		super(invaders, projectilesActive, projectilesInactive);
 		// TODO Auto-generated constructor stub
-		FileReader reader = new FileReader("LevelData.txt");
+		InputStream reader = getResources.openRawResource(R.raw.leveldata);
 		scanner = new Scanner(reader);
 	}
 
