@@ -1,5 +1,7 @@
 package org.osgcc.osgcc5.soapydroid.physics;
 
+import org.osgcc.osgcc5.soapydroid.things.CollidableThing;
+
 public class PhysicsEngine implements CollisionHandler{
 	
 	//gets the two objects that are colliding to return the velocity of thing1
@@ -39,14 +41,15 @@ public class PhysicsEngine implements CollisionHandler{
 	private boolean haveCollided(CollidableThing thing1, CollidableThing thing2)
 	{
 		boolean collided = false;
-		if( (thing1.getY()+thing1.getHeight() == thing2.getY()) || (thing2.getY()+thing2.getHeight() == thing1.getY()))
+		//checks to see if they collided by top or bottom of squares
+		if( (thing1.getY()+thing1.getHeight() >= thing2.getY()) || (thing2.getY()+thing2.getHeight() >= thing1.getY()))
 		{
-			collided = true;
+			if( ((thing2.getX() + thing2.getWidth() - thing1.getX()) <= (thing1.getWidth() + thing2.getWidth())) ||
+					( (thing1.getX() + thing1.getWidth() - thing2.getX()) <= (thing1.getWidth() + thing2.getWidth()) ))
+				collided = true;
 		}
-		else if ( (thing1.getX()+thing1.getHeight() == thing2.getX()) || (thing2.getX()+thing2.getHeight() == thing1.getX()))
-		{
-			collided = true;
-		}
+		//checks to see if they collide on either sides
+		
 		return collided;
 	}
 	
@@ -85,7 +88,7 @@ public class PhysicsEngine implements CollisionHandler{
 	public void updatePosition(CollidableThing thing)
 	{
 			thing.setX(thing.getX()+thing.getDx());
-			thing.setY(thing.getX()+thing.getDy());
+			thing.setY(thing.getY()+thing.getDy());
 			
 			//keeps and object from going past the left side of the screen and bounces it the opposite direction
 			if(thing.getX() <= 0)
