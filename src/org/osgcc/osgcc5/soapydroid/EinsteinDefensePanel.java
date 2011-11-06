@@ -119,6 +119,11 @@ public class EinsteinDefensePanel extends SurfaceView implements SurfaceHolder.C
 	 */
 	private float earthFloor;
 	
+	/**
+	 * ID to the current background in R.java
+	 */
+	private int currentBackgroundR;
+	
 	public EinsteinDefensePanel(Context context) {
 		super(context);
 		getHolder().addCallback(this);
@@ -131,6 +136,7 @@ public class EinsteinDefensePanel extends SurfaceView implements SurfaceHolder.C
 		rotationDetector = new RotationDetector(context);
 		physicsEngine = new PhysicsEngine(rotationDetector);
 		scoreManager = new ScoreManager();
+		currentBackgroundR = R.drawable.background;
 		
 		// for test: no ceiling
 		//flingCeiling = 0;
@@ -140,7 +146,7 @@ public class EinsteinDefensePanel extends SurfaceView implements SurfaceHolder.C
 		
 		//levelInitializer = new LevelInitializerSample(invaders, projectilesActive, projectilesInactive);
 		try {
-			levelInitializer = new LevelData(invaders, projectilesActive, projectilesInactive);
+			levelInitializer = new LevelData(invaders, projectilesActive, projectilesInactive, this);
 		} catch (FileNotFoundException e) {
 			System.exit(1);
 		}
@@ -296,6 +302,10 @@ public class EinsteinDefensePanel extends SurfaceView implements SurfaceHolder.C
 	
 	public boolean isThreadRunning() {
 		return gameThread.isRunning();
+	}
+	
+	public void setBackground(int backgroundR) {
+		currentBackgroundR = backgroundR;
 	}
 	
 	

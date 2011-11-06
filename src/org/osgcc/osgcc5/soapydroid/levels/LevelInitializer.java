@@ -2,6 +2,7 @@ package org.osgcc.osgcc5.soapydroid.levels;
 
 import java.util.List;
 
+import org.osgcc.osgcc5.soapydroid.EinsteinDefensePanel;
 import org.osgcc.osgcc5.soapydroid.things.CollidableThing;
 
 public abstract class LevelInitializer {
@@ -25,14 +26,18 @@ public abstract class LevelInitializer {
 	protected List<CollidableThing> projectilesInactive;
 	
 	protected int currentLevel;
+	
+	protected EinsteinDefensePanel panel;
 
 	public LevelInitializer(List<CollidableThing> invaders,
 			List<CollidableThing> projectilesActive,
-			List<CollidableThing> projectilesInactive) {
+			List<CollidableThing> projectilesInactive,
+			EinsteinDefensePanel panel) {
 		
 		this.invaders = invaders;
 		this.projectilesActive = projectilesActive;
 		this.projectilesInactive = projectilesInactive;
+		this.panel = panel;
 		currentLevel = 0;
 		
 		
