@@ -1,7 +1,5 @@
 package org.osgcc.osgcc5.soapydroid.physics;
 
-import org.osgcc.osgcc5.soapydroid.things.CollidableThing;
-
 public class PhysicsEngine implements CollisionHandler{
 	
 	//gets the two objects that are colliding to return the velocity of thing1
