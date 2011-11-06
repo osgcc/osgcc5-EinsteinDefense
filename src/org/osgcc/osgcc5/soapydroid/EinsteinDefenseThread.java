@@ -142,25 +142,32 @@ public class EinsteinDefenseThread extends Thread {
 					}
 
 					// check invaders for out-of-bounds-ness, hit the earth
-					for (CollidableThing invader : invaders) {
-						// if more than 1.5x it's height or width out-of-bounds...
-						float oobModifier = 1.5f;
-						float x = invader.getX();
-						float y = invader.getY();
-						float width = invader.getWidth();
-						float height = invader.getHeight();
-						if (y < -height*oobModifier ||
-								x < -width*oobModifier ||
-								x > 1280 + width*oobModifier) {
-							scoreManager.incrementScore(invader.getPoints());
-							invaders.remove(invader);
-						} else if (y + height >= earthFloor) {
-							scoreManager.decrementLife();
-							// create an explosion here
+					synchronized (invaders) {
+						for (int i=0; i<invaders.size(); i++) {
 							
-							invaders.remove(invader);
+							CollidableThing invader = invaders.get(i);
+							// if more than 1.5x it's height or width out-of-bounds...
+							float oobModifier = 1.5f;
+							float x = invader.getX();
+							float y = invader.getY();
+							float width = invader.getWidth();
+							float height = invader.getHeight();
+							if (y < -height*oobModifier ||
+									x < -width*oobModifier ||
+									x > 1280 + width*oobModifier) {
+								scoreManager.incrementScore(invader.getPoints());
+								invaders.remove(invader);
+								i--;
+							} else if (y + height >= earthFloor) {
+								scoreManager.decrementLife();
+								// create an explosion here
+
+								invaders.remove(invader);
+								i--;
+							}
+
 						}
-						
+
 					}
 
 
