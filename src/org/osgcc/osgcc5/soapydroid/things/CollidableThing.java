@@ -14,6 +14,8 @@ public abstract class CollidableThing {
 	private int accx;
 	private int accy;
 	
+	//mass
+	private int mass;
 	
 	
 	
@@ -56,5 +58,12 @@ public abstract class CollidableThing {
 	public void setAccy(int accy) {
 		this.accy = accy;
 	}
-	
+	public int getMass()
+	{
+		return mass;
+	}
+	public void setMass(int mass)
+	{
+		this.mass = mass;
+	}
 }
