@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.osgcc.osgcc5.soapydroid.gestures.EinsteinGestureListener;
+import org.osgcc.osgcc5.soapydroid.levels.LevelInitializer;
+import org.osgcc.osgcc5.soapydroid.levels.LevelInitializerSample;
 import org.osgcc.osgcc5.soapydroid.things.CollidableThing;
 
 import android.content.Context;
@@ -15,6 +17,7 @@ import android.graphics.Canvas;
 import android.media.SoundPool;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -48,6 +51,8 @@ public class EinsteinDefensePanel extends SurfaceView implements SurfaceHolder.C
 	 */
 	private CollidableThing heldOutCollidable;
 	
+	private LevelInitializer levelInitializer;
+	
 	/**
 	 * List of active invaders.
 	 * NOTE: this will be used by multiple threads. Make sure to synchronize!
@@ -80,6 +85,12 @@ public class EinsteinDefensePanel extends SurfaceView implements SurfaceHolder.C
 		projectilesInactive = new ArrayList<CollidableThing>();
 		heldOutCollidable = null;
 		
+		// for test: no ceiling
+		flingCeiling = 9999;
+		
+		levelInitializer = new LevelInitializerSample(invaders, projectilesActive, projectilesInactive);
+		levelInitializer.initializeLists(0);
+		
 		gestureListener = new GestureDetector(context, 
 				new EinsteinGestureListener(this, projectilesInactive, projectilesActive, flingCeiling));
 		gameThread = new EinsteinDefenseThread(this, invaders, projectilesActive, projectilesInactive);
@@ -93,7 +104,7 @@ public class EinsteinDefensePanel extends SurfaceView implements SurfaceHolder.C
 	protected void onDraw(Canvas canvas) {
 		Log.d(DEBUG_TAG, "drawing canvas...");
 		// draw test
-		//canvas.drawBitmap(imageCache.get(R.drawable.cow), 50, 50, null);
+		canvas.drawBitmap(imageCache.get(R.drawable.cow), 50, 500, null);
 		
 		// draw background
 		
@@ -122,7 +133,7 @@ public class EinsteinDefensePanel extends SurfaceView implements SurfaceHolder.C
 			if (heldOutCollidable != null) {
 				canvas.drawBitmap(heldOutCollidable.getBitmap(), heldOutCollidable.getX(), heldOutCollidable.getY(), null);
 			}
-		}		
+		}
 		
 	}
 
@@ -164,7 +175,10 @@ public class EinsteinDefensePanel extends SurfaceView implements SurfaceHolder.C
 		this.heldOutCollidable = heldOutCollidable; 
 	}
 	
-	
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		return gestureListener.onTouchEvent(event);
+	}
 	
 	
 }
