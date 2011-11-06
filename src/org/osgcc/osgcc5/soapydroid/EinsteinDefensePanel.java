@@ -84,14 +84,14 @@ public class EinsteinDefensePanel extends SurfaceView implements SurfaceHolder.C
 		
 	}
 
-	@Override
+	
 	public void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2,
 			int arg3) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
+	
 	public void surfaceCreated(SurfaceHolder arg0) {
 		if (!gameThread.isAlive()) {
 			gameThread = new EinsteinDefenseThread(this);
@@ -101,7 +101,7 @@ public class EinsteinDefensePanel extends SurfaceView implements SurfaceHolder.C
 		
 	}
 
-	@Override
+	
 	public void surfaceDestroyed(SurfaceHolder arg0) {
 		boolean retry = true;
 		gameThread.setRunning(false);
