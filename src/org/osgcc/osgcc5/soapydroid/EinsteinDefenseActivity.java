@@ -14,6 +14,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.util.Log;
@@ -40,8 +41,7 @@ public class EinsteinDefenseActivity extends Activity {
 	 */
 	private static SoundPool soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 100) ;
 	private static Map<Integer, Integer> soundCache = new HashMap<Integer, Integer>() ;
-	//private static SoundPool soundCache = new SoundPool(maxStreams, streamType, srcQuality);
-	
+	private MediaPlayer player ;
 	private static Map<Integer, InputStream> textCache = new HashMap<Integer, InputStream>();
 	
 	/**
@@ -67,9 +67,10 @@ public class EinsteinDefenseActivity extends Activity {
 		loadSounds();
 		Log.d(DEBUG_TAG, "loading text...");
 		loadText();
-		
-		Log.d(DEBUG_TAG, "starting view initialization...");
-		soundPool.play(soundCache.get(3), 1F, 1F, 3, 0, 1F) ;
+		 
+		 Log.d(DEBUG_TAG, "starting view initialization...");
+		 player = MediaPlayer.create(this, soundCache.get(3)) ;
+		 player.start() ;
 		 TitleScreen titleScreen = new TitleScreen(this) ;
 		 setContentView(titleScreen) ;
 		  
