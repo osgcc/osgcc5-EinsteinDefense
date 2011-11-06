@@ -173,9 +173,11 @@ public class EinsteinDefenseThread extends Thread {
 						}
 					}
 
+
 					// check invaders for out-of-bounds-ness, hit the earth
 					synchronized (invaders) {
 						for (int i=0; i<invaders.size(); i++) {
+
 							
 							CollidableThing invader = invaders.get(i);
 							// if more than 1.5x it's height or width out-of-bounds...
@@ -193,8 +195,8 @@ public class EinsteinDefenseThread extends Thread {
 							} else if (y + height >= earthFloor) {
 								scoreManager.decrementLife();
 								// create an explosion here
+								soundPool.play(soundCache.get(0), 1F, 1F, 1, 0, 1F) ;
 								
-								soundPool.play(soundCache.get(1), 1F, 1F, 1, 0, 1F) ;
 								
 								invaders.remove(invader);
 								i--;

@@ -13,6 +13,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.media.SoundPool;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -22,6 +23,9 @@ public class HelpScreen extends View{
 
 	
 	private static final String DEBUG_TAG = "Help Screen";
+	private static Map<Integer, Integer> soundCache = EinsteinDefenseActivity.getSoundCache() ;
+	
+	private static SoundPool soundPool              = EinsteinDefenseActivity.getSoundPool() ;
 	
 	private static Map<Integer, Bitmap> imageCache = EinsteinDefenseActivity.getImageCache() ;
 	GestureDetector listener ;
@@ -70,6 +74,7 @@ public class HelpScreen extends View{
 				
 				if(y >= 625F && y <= 725F)
 				{
+					soundPool.play(soundCache.get(2), 1F, 1F, 1, 0, 1F) ;
 					((Activity)context).setContentView(new TitleScreen(context)) ;
 				}
 			}

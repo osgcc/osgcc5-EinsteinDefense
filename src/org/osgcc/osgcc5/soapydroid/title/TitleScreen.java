@@ -14,6 +14,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.media.SoundPool;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -27,6 +28,9 @@ public class TitleScreen extends View {
 	
 	GestureDetector listener ;
 	Context         context  ;private static Map<Integer, Bitmap> imageCache = EinsteinDefenseActivity.getImageCache() ;
+	private static Map<Integer, Integer> soundCache = EinsteinDefenseActivity.getSoundCache() ;
+	private static SoundPool soundPool              = EinsteinDefenseActivity.getSoundPool() ;
+	
 	public TitleScreen(Context context) {
 		super(context);
 		this.context = context ;
@@ -45,7 +49,7 @@ public class TitleScreen extends View {
 		//canvas.drawBitmap(imageCache.get(R.drawable.cow), 50, 500, null);
 		
 		// draw background
-		
+		soundPool.play(soundCache.get(3), 1F, 1F, 1, 0, 1F) ;
 		canvas.drawBitmap(imageCache.get(R.drawable.logo), 0, 0, null);
 		canvas.drawBitmap(imageCache.get(R.drawable.startbutton), 573F, 500F,  null);
 		canvas.drawBitmap(imageCache.get(R.drawable.helpbutton),  573F, 625F,  null);
@@ -80,12 +84,15 @@ public class TitleScreen extends View {
 				if(y >= 500F && y <= 600F)
 				{
 					Log.v(DEBUG_TAG, "DETECTED") ;
+					
+					soundPool.play(soundCache.get(2), 1F, 1F, 1, 0, 1F) ;
 					EinsteinDefensePanel panel = new EinsteinDefensePanel(context);
 					((Activity)context).setContentView(panel) ;
 					
 				}
 				if(y >= 625F && y <= 725F)
 				{
+					soundPool.play(soundCache.get(2), 1F, 1F, 1, 0, 1F) ;
 					((Activity)context).setContentView(new HelpScreen(context)) ;
 				}
 			}
