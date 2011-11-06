@@ -121,7 +121,7 @@ GestureDetector.OnDoubleTapListener {
 		// TODO Auto-generated method stub
 		float x = event.getX() ;
 		float y = event.getY() ;
-		
+		boolean isTouch = false ;
 		for(CollidableThing i: collidables)
 		{
 			if(x >= i.getX() || x <= (i.getX() + i.getWidth()) && y < maxY)
@@ -131,7 +131,9 @@ GestureDetector.OnDoubleTapListener {
 							{
 							collidables.remove(i) ;
 							mainView.setHeldOutCollidable(i) ;
+							isTouch = true ;
 							}
+							Log.v(DEBUG_TAG, "Is touching: " + isTouch) ;
 							return i ; 
 						}
 		}
