@@ -32,6 +32,7 @@ public abstract class CollidableThing {
 	// is invader?
 	protected boolean isEnemy;
 	
+
 	// point value
 	protected int points;
 	
@@ -63,6 +64,7 @@ public abstract class CollidableThing {
 		this.type = type;
 	}
 
+
 	public int getPoints() {
 		return points;
 	}
@@ -70,6 +72,7 @@ public abstract class CollidableThing {
 	public void setPoints(int points) {
 		this.points = points;
 	}
+
 
 	public float getOrientation() {
 		return orientation;
