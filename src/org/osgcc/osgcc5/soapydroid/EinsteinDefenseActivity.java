@@ -69,7 +69,7 @@ public class EinsteinDefenseActivity extends Activity {
 		loadText();
 		
 		Log.d(DEBUG_TAG, "starting view initialization...");
-		soundPool.play(soundCache.get(3), 1F, 1F, 3, 0, 1F) ;
+		soundPool.play(soundCache.get(3), 1F, 1F, 3, -1, 1F) ;
 		 TitleScreen titleScreen = new TitleScreen(this) ;
 		 setContentView(titleScreen) ;
 		  

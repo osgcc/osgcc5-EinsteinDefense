@@ -45,7 +45,7 @@ public class HelpScreen extends View{
 		//canvas.drawBitmap(imageCache.get(R.drawable.cow), 50, 500, null);
 		
 		// draw background
-		canvas.drawBitmap(imageCache.get(R.drawable.background), 0, 0, null)      ;
+		canvas.drawBitmap(imageCache.get(R.drawable.help), 0, 0, null)      ;
 		canvas.drawBitmap(imageCache.get(R.drawable.okbutton),  573F, 625F,  null);
 		// draw collidable objects
 		// NOTE: must figure out how to draw with rotation!
