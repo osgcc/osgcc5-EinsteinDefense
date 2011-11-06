@@ -56,6 +56,7 @@ public class EinsteinDefenseActivity extends Activity {
 		imageCache.put(R.drawable.rock, BitmapFactory.decodeResource(getResources(), R.drawable.rock));
 		imageCache.put(R.drawable.iceberg, BitmapFactory.decodeResource(getResources(), R.drawable.iceberg));
 		imageCache.put(R.drawable.background, BitmapFactory.decodeResource(getResources(), R.drawable.background));
+		imageCache.put(R.drawable.einstein, BitmapFactory.decodeResource(getResources(), R.drawable.einstein));
 	}
 	
 	private void loadSounds() {

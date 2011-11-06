@@ -85,11 +85,12 @@ public class EinsteinDefenseThread extends Thread {
 						}
 					}
 					
-					// update positions
+					// update positions, velocities given gravity
 					for (CollidableThing invader : invaders) {
 						physicsEngine.updatePosition(invader);
 					}
 					for (CollidableThing projectile : projectilesActive) {
+						physicsEngine.gravity(projectile);
 						physicsEngine.updatePosition(projectile);
 					}
 
