@@ -58,7 +58,14 @@ GestureDetector.OnDoubleTapListener {
 			float velocityY) {
 		// TODO Auto-generated method stub
 		Log.v(DEBUG_TAG, "onFling")  ;
+		synchronized(activeThings)
+		{
 		activeThings.add(movingItem) ;
+		}
+		synchronized(activeThings)
+		{
+			mainView.setHeldOutCollidable(null) ;
+		}
 		movingItem      = null       ;
 		return true;
 	}
@@ -76,7 +83,14 @@ GestureDetector.OnDoubleTapListener {
 		
 		if(e2.getY() > maxY)
 		{
+			synchronized(activeThings)
+			{
 			activeThings.add(movingItem) ;
+			}
+			synchronized(activeThings)
+			{
+				mainView.setHeldOutCollidable(null) ;
+			}
 			movingItem = null            ;
 			
 		}
@@ -112,9 +126,10 @@ GestureDetector.OnDoubleTapListener {
 			if(x >= i.getX() || x <= (i.getX() + i.getWidth()) && y < maxY)
 				if(y <= i.getY() || y >= (i.getY() - i.getHeight()))
 						{
-							synchronized(mainView.getHolder())
+							synchronized(collidables)
 							{
 							collidables.remove(i) ;
+							mainView.setHeldOutCollidable(i) ;
 							}
 							return i ; 
 						}
