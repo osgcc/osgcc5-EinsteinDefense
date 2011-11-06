@@ -20,6 +20,7 @@ import android.util.Log;
 import org.osgcc.osgcc5.soapydroid.EinsteinDefenseActivity;
 import org.osgcc.osgcc5.soapydroid.R;
 
+//Loads the data for each new level
 public class LevelData extends LevelInitializer{
 
 	Scanner scanner;
@@ -64,6 +65,7 @@ public class LevelData extends LevelInitializer{
 			if(thingType.equals("Einstein"))
 			{
 				thingsArray[k].setDy(scanner.nextInt());
+				thingsArray[k].setPoints(scanner.nextInt());
 				invaders.add(thingsArray[k]);
 			}
 			else

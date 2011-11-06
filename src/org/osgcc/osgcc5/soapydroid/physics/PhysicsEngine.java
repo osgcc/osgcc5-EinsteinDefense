@@ -1,8 +1,22 @@
 package org.osgcc.osgcc5.soapydroid.physics;
 
+import org.osgcc.osgcc5.soapydroid.sensors.RotationDetector;
 import org.osgcc.osgcc5.soapydroid.things.CollidableThing;
 
-public class PhysicsEngine implements CollisionHandler{
+import android.util.Log;
+
+public class PhysicsEngine implements CollisionHandler {
+
+	public static final String DEBUG_TAG = "EinsteinDefenseActivity";
+	
+	/**
+	 * Class for obtaining current rotation value from orientation sensors.
+	 */
+	private RotationDetector rotationDetector;
+	
+	public PhysicsEngine(RotationDetector rotationDetector) {
+		this.rotationDetector = rotationDetector;
+	}
 	
 	//gets the two objects that are colliding to return the velocity of thing1
 	/*
@@ -158,13 +172,13 @@ public class PhysicsEngine implements CollisionHandler{
 			thing.setY(thing.getY()+thing.getDy());
 			
 			//keeps and object from going past the left side of the screen and bounces it the opposite direction
-			if(thing.getX() <= 0)
+			if(thing.getX() <= 0 && !thing.isEnemy())
 			{
 				thing.setX(0);
 				collisionWall(thing);
 			}
 			//keeps objects from going past the right side of the screen and bounces it to the left
-			if(thing.getX() + thing.getWidth() >= 1280)//1280 should be width of screen
+			if(thing.getX() + thing.getWidth() >= 1280 && !thing.isEnemy())//1280 should be width of screen
 			{
 				thing.setX(1280 - thing.getWidth());
 				collisionWall(thing);
@@ -173,10 +187,21 @@ public class PhysicsEngine implements CollisionHandler{
 	
 	public void gravity(CollidableThing thing)
 	{
-		//add to dy's to slow down and eventually reverse direction
-		//only affects the player's projectiles
-		if(!thing.isEnemy())
-			thing.setDy((float)(thing.getDy() + .5));
+		// add to dy's to slow down and eventually reverse direction
+		// only affects the player's projectiles
+		// compute with respect to current orientation
+		if(!thing.isEnemy()) {
+			
+			//thing.setDy((float)(thing.getDy() + .5));
+			
+			float xWeight = rotationDetector.getXWeight();
+			float yWeight = rotationDetector.getYWeight();
+			float gravStrength = 1.5f;
+			// figure out relative portions of gravStrength which belong 
+			//  to x and y 
+			thing.setDx(thing.getDx() + gravStrength*xWeight);
+			thing.setDy(thing.getDy() + gravStrength*yWeight);
+		}
 		
 	}
 	

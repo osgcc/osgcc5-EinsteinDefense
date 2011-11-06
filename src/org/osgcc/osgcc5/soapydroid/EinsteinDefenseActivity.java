@@ -13,6 +13,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,15 +38,27 @@ public class EinsteinDefenseActivity extends Activity {
 	/**
 	 * Cache for all sound files.
 	 */
-	private static SoundPool soundCache;
+	private static SoundPool soundPool = new SoundPool(4, AudioManager.STREAM_MUSIC, 100) ;
+	private static Map<Integer, Integer> soundCache = new HashMap<Integer, Integer>() ;
 	//private static SoundPool soundCache = new SoundPool(maxStreams, streamType, srcQuality);
 	
 	private static Map<Integer, InputStream> textCache = new HashMap<Integer, InputStream>();
+	
+	/**
+	 * Reference to title screen.
+	 */
+	private static TitleScreen titleScreen;
+	
+	/**
+	 * Reference to activity object.
+	 */
+	private static EinsteinDefenseActivity activity;
 	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		activity = this;
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		//setContentView(R.layout.main);
 		Log.d(DEBUG_TAG, "loading images...");
@@ -57,8 +70,8 @@ public class EinsteinDefenseActivity extends Activity {
 		
 		Log.d(DEBUG_TAG, "starting view initialization...");
 		
-		 TitleScreen test = new TitleScreen(this) ;
-		 setContentView(test) ;
+		 TitleScreen titleScreen = new TitleScreen(this) ;
+		 setContentView(titleScreen) ;
 		  
 		 
 	}
@@ -73,14 +86,17 @@ public class EinsteinDefenseActivity extends Activity {
 		imageCache.put(R.drawable.rock, BitmapFactory.decodeResource(getResources(), R.drawable.rock));
 		imageCache.put(R.drawable.iceberg, BitmapFactory.decodeResource(getResources(), R.drawable.iceberg));
 		imageCache.put(R.drawable.background, BitmapFactory.decodeResource(getResources(), R.drawable.background));
+		imageCache.put(R.drawable.logo, BitmapFactory.decodeResource(getResources(), R.drawable.logo));
 		imageCache.put(R.drawable.einstein, BitmapFactory.decodeResource(getResources(), R.drawable.einstein));
+		
 	}
 	
 	private void loadSounds() {
-		
+		soundCache.put(1, soundPool.load(this, R.raw.explosion, 1)) ;
 		
 		
 	}
+	
 	
 	private void loadText() {
 		textCache.put(R.raw.leveldata, getResources().openRawResource(R.raw.leveldata));
@@ -90,12 +106,21 @@ public class EinsteinDefenseActivity extends Activity {
 		return imageCache;
 	}
 	
-	public static SoundPool getSoundCache() {
+	public static Map<Integer, Integer> getSoundCache() {
 		return soundCache;
+	}
+	
+	public static SoundPool getSoundPool()
+	{
+		return soundPool ;
 	}
 	
 	public static Map<Integer, InputStream> getTextCache() {
 		return textCache;
+	}
+	
+	public static void loadTitleScreen() {
+		activity.setContentView(titleScreen);
 	}
 
 

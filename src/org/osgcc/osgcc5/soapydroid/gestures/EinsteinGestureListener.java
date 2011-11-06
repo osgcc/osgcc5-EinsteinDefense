@@ -11,6 +11,8 @@ import android.view.MotionEvent;
 
 public class EinsteinGestureListener implements GestureDetector.OnGestureListener, 
 GestureDetector.OnDoubleTapListener {
+	
+	public static final float DAMPENING_FACTOR = 0.7f;
 
 	/**
 	 * reference to main panel
@@ -67,8 +69,8 @@ GestureDetector.OnDoubleTapListener {
 		{
 		if(movingItem != null)
 		{
-		movingItem.setDx(velocityX * .02F) ;
-		movingItem.setDy(velocityY * .02F) ;
+		movingItem.setDx(velocityX * .03F * DAMPENING_FACTOR) ;
+		movingItem.setDy(velocityY * .03F * DAMPENING_FACTOR) ;
 		activeThings.add(movingItem) ;
 		}
 		}
@@ -103,8 +105,8 @@ GestureDetector.OnDoubleTapListener {
 			synchronized(activeThings)
 			{
 				if (movingItem != null) {
-					movingItem.setDx(velocityX) ;
-					movingItem.setDy(velocityY) ;
+					movingItem.setDx(velocityX * DAMPENING_FACTOR) ;
+					movingItem.setDy(velocityY * DAMPENING_FACTOR) ;
 					activeThings.add(movingItem) ;
 				}
 			}
