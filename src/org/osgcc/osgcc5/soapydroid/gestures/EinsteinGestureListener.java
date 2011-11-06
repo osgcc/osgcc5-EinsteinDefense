@@ -25,6 +25,7 @@ GestureDetector.OnDoubleTapListener {
 		this.mainView    = mainView    ;
 		this.collidables = collidables ;
 		this.maxY        = maxY        ;
+		this.activeThings = activeList ;
 	}
 	
 	 
