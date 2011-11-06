@@ -1,5 +1,6 @@
 package org.osgcc.osgcc5.soapydroid;
 
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,7 +39,9 @@ public class EinsteinDefenseActivity extends Activity {
 	 */
 	private static SoundPool soundCache;
 	//private static SoundPool soundCache = new SoundPool(maxStreams, streamType, srcQuality);
-
+	
+	private static Map<Integer, InputStream> textCache = new HashMap<Integer, InputStream>();
+	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,9 @@ public class EinsteinDefenseActivity extends Activity {
 		loadBitmaps();
 		Log.d(DEBUG_TAG, "loading sounds...");
 		loadSounds();
+		Log.d(DEBUG_TAG, "loading text...");
+		loadText();
+		
 		Log.d(DEBUG_TAG, "starting view initialization...");
 		
 		 TitleScreen test = new TitleScreen(this) ;
@@ -73,12 +79,20 @@ public class EinsteinDefenseActivity extends Activity {
 		
 	}
 	
+	private void loadText() {
+		textCache.put(R.raw.leveldata, getResources().openRawResource(R.raw.leveldata));
+	}
+	
 	public static Map<Integer, Bitmap> getImageCache() {
 		return imageCache;
 	}
 	
 	public static SoundPool getSoundCache() {
 		return soundCache;
+	}
+	
+	public static Map<Integer, InputStream> getTextCache() {
+		return textCache;
 	}
 
 
