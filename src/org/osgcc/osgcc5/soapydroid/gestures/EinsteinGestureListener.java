@@ -67,8 +67,8 @@ GestureDetector.OnDoubleTapListener {
 		{
 		if(movingItem != null)
 		{
-		movingItem.setDx(velocityX) ;
-		movingItem.setDy(velocityY) ;
+		movingItem.setDx(velocityX * .02F) ;
+		movingItem.setDy(velocityY * .02F) ;
 		activeThings.add(movingItem) ;
 		}
 		}
