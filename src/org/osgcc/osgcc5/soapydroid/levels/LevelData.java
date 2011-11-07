@@ -23,6 +23,9 @@ import org.osgcc.osgcc5.soapydroid.R;
 
 //Loads the data for each new level
 public class LevelData extends LevelInitializer{
+	
+	public static final String DEBUG_TAG = "EinsteinDefenseActivity";
+	
 
 	Scanner scanner;
 	public LevelData(List<CollidableThing> invaders,
@@ -41,7 +44,7 @@ public class LevelData extends LevelInitializer{
 		int mapNum = scanner.nextInt();
 		if(mapNum==1)
 		{
-			panel.setBackground(R.drawable.background);
+			panel.setBackground(R.drawable.background_orig);
 		}
 		else if(mapNum == 2)
 		{
@@ -53,7 +56,7 @@ public class LevelData extends LevelInitializer{
 		}
 		else if(mapNum == 4)
 		{
-			panel.setBackground(R.drawable.background_lvl2);
+			panel.setBackground(R.drawable.background_lvl2day);
 		}
 		else if(mapNum == 5)
 		{
@@ -77,7 +80,7 @@ public class LevelData extends LevelInitializer{
 		}
 		else
 		{
-			panel.setBackground(R.drawable.background);
+			panel.setBackground(R.drawable.background_orig);
 		}
 		int numberOfThings = scanner.nextInt();
 		CollidableThing[] thingsArray = new CollidableThing[numberOfThings];
@@ -87,7 +90,8 @@ public class LevelData extends LevelInitializer{
 		for(int k = 0; k < thingsArray.length; k++ )
 		{
 			//loops through the text file one line at a time to get info for lvls
-
+			// 6 9 Cow small 906 700 3 Cow small 330 690 3 Iceberg small 30 700 3 Einstein 57 180 -185 2 1 Einstein 57 260 -185 2 1 Einstein 57 210 -285 2 1 Einstein 57 800 -385 2 1 Einstein 142 640 -385 1 3 Einstein 142 800 -500 1 3 Einstein 142 900 -400 2 3
+			//
 			thingType = scanner.next();
 			if(!thingType.equals("Einstein"))
 			{
@@ -110,7 +114,7 @@ public class LevelData extends LevelInitializer{
 			thingsArray[k].setX(scanner.nextInt());
 			thingsArray[k].setY(scanner.nextInt());
 			thingsArray[k].setMass(scanner.nextInt());
-			
+			Log.v(DEBUG_TAG, "thingsArrayk: "+thingsArray[k].getType());
 			if(thingType.equals("Einstein"))
 			{
 				thingsArray[k].setDy(scanner.nextInt());

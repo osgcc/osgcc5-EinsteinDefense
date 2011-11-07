@@ -147,7 +147,7 @@ public class EinsteinDefensePanel extends SurfaceView implements SurfaceHolder.C
 		rotationDetector = new RotationDetector(context);
 		physicsEngine = new PhysicsEngine(rotationDetector);
 		scoreManager = new ScoreManager();
-		currentBackgroundR = R.drawable.background;
+		currentBackgroundR = R.drawable.background_orig;
 		
 		// for test: no ceiling
 		//flingCeiling = 0;
